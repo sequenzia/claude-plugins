@@ -1,0 +1,19 @@
+{
+  "name": "sequenzia-claude-plugins",
+  "description": "Directory of popular Claude Code extensions including development tools, productivity plugins, and MCP integrations",
+  "owner": {
+    "name": "Stephen Sequenzia",
+    "email": "sequenzia@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "prd",
+      "description": "A plugin for creatging and managing PRDs (Product Requirement Documents).",
+      "version": "1.0.0",
+      "author": {
+        "name": "Stephen Sequenzia",
+        "email": "sequenzia@gmail.com"
+      }
+    }
+  ]
+}
