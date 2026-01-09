@@ -8,12 +8,15 @@
   "plugins": [
     {
       "name": "prd",
-      "description": "A plugin for creatging and managing PRDs (Product Requirement Documents).",
+      "description": "A plugin for creatging and managing PRDs (Product Requirement Documents)",
       "version": "1.0.0",
       "author": {
         "name": "Stephen Sequenzia",
         "email": "sequenzia@gmail.com"
-      }
+      },
+      "source": "./plugins/prd",
+      "category": "development",
+      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/prd"
     }
   ]
 }
