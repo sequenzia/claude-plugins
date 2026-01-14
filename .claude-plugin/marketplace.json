@@ -17,6 +17,17 @@
       "source": "./plugins/prd",
       "category": "development",
       "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/prd"
+    },
+    {
+      "name": "feature-dev",
+      "description": "Comprehensive feature development workflow with specialized agents for codebase exploration, architecture design, and quality review",
+      "author": {
+        "name": "Anthropic",
+        "email": "support@anthropic.com"
+      },
+      "source": "./plugins/feature-dev",
+      "category": "development",
+      "homepage": "https://github.com/anthropics/claude-plugins-public/tree/main/plugins/feature-dev"
     }
   ]
 }
