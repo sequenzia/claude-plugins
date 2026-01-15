@@ -1,0 +1,212 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ralph Task Executor State",
+  "description": "Schema for tracking execution state of spec-task-manager tasks via ralph-loop",
+  "type": "object",
+  "required": ["version", "status", "task_file", "config", "started_at"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Schema version for state file format",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "default": "1.0.0"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["running", "paused", "completed", "aborted"],
+      "description": "Current execution status"
+    },
+    "task_file": {
+      "type": "string",
+      "description": "Path to the spec-task-manager .tasks.json file being executed"
+    },
+    "config": {
+      "type": "object",
+      "description": "Execution configuration",
+      "properties": {
+        "parallel_mode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable parallel execution within phases"
+        },
+        "auto_sync": {
+          "type": "boolean",
+          "default": false,
+          "description": "Auto-update task file on completion"
+        },
+        "max_iterations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 10,
+          "description": "Maximum ralph-loop iterations per task"
+        }
+      },
+      "required": ["parallel_mode", "auto_sync", "max_iterations"]
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp when execution started"
+    },
+    "last_activity": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp of last state update"
+    },
+    "paused_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "ISO-8601 timestamp when execution was paused"
+    },
+    "pause_reason": {
+      "type": ["string", "null"],
+      "description": "Reason for pausing execution"
+    },
+    "current_task": {
+      "type": ["string", "null"],
+      "pattern": "^TASK-\\d{3,}$",
+      "description": "ID of task currently being executed"
+    },
+    "current_iteration": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Current ralph-loop iteration for active task"
+    },
+    "task_start_time": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When current task started"
+    },
+    "in_progress": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TASK-\\d{3,}$"
+      },
+      "description": "Tasks currently being executed (multiple in parallel mode)"
+    },
+    "completed": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TASK-\\d{3,}$"
+      },
+      "description": "Tasks successfully completed"
+    },
+    "blocked": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TASK-\\d{3,}$"
+      },
+      "description": "Tasks that failed or are blocked"
+    },
+    "pending_completions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TASK-\\d{3,}$"
+      },
+      "description": "Completed tasks awaiting sync to task file (manual mode)"
+    },
+    "task_timings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "started": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completed": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "iterations": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": ["started", "completed", "iterations"]
+      },
+      "description": "Timing data for completed tasks"
+    },
+    "task_artifacts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "description": "Files modified by each task (for dependency context)"
+    },
+    "blocked_reasons": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "description": "Why the task was blocked"
+          },
+          "details": {
+            "type": "string",
+            "description": "Additional context (e.g., final output excerpt)"
+          },
+          "blocked_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "iteration_count": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": ["reason", "blocked_at"]
+      },
+      "description": "Reasons why tasks were blocked"
+    },
+    "parallel_batch": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "string",
+        "pattern": "^TASK-\\d{3,}$"
+      },
+      "description": "Current batch of parallel tasks (parallel mode)"
+    },
+    "parallel_pending": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 0,
+      "description": "Number of parallel tasks still pending in current batch"
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "total_iterations": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Sum of all iterations across all tasks"
+        },
+        "avg_iterations_per_task": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average iterations to complete a task"
+        },
+        "total_time_seconds": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total elapsed execution time in seconds"
+        },
+        "avg_time_per_task_seconds": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average time per task in seconds"
+        }
+      },
+      "description": "Aggregate execution metrics"
+    }
+  }
+}

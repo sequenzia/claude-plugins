@@ -9,10 +9,33 @@ A collection of plugins for [Claude Code](https://claude.ai/code) that enhance A
 | [feature-dev](./plugins/feature-dev/) | 7-phase feature development workflow with specialized agents | `/feature-dev` |
 | [prd](./plugins/prd/) | Product Requirements Document generator | `/prd` |
 | [spec-task-manager](./plugins/spec-task-manager/) | Transform specifications into structured task lists | `/spec-task-manager:*` |
+| [ralph-task-executor](./plugins/ralph-task-executor/) | Automated task execution via ralph-loop | `/ralph-task-executor:*` |
 
 ## Quick Start
 
 ### Installation
+
+#### Option 1: Add as Marketplace (Recommended)
+
+Add this repository as a plugin marketplace directly in Claude Code:
+
+```bash
+# Add the marketplace
+/plugin marketplace add sequenzia/claude-plugins
+
+# List available plugins
+/plugin marketplace list
+
+# Install individual plugins
+/plugin install feature-dev@sequenzia/claude-plugins
+/plugin install prd@sequenzia/claude-plugins
+/plugin install spec-task-manager@sequenzia/claude-plugins
+/plugin install ralph-task-executor@sequenzia/claude-plugins
+```
+
+This method automatically handles updates and dependencies.
+
+#### Option 2: Clone and Use Locally
 
 Clone the repository and point Claude Code to the plugins directory:
 
@@ -24,7 +47,7 @@ cd claude-plugins
 claude --plugin-dir ./plugins/feature-dev
 
 # Or use all plugins
-claude --plugin-dir ./plugins/feature-dev --plugin-dir ./plugins/prd --plugin-dir ./plugins/spec-task-manager
+claude --plugin-dir ./plugins/feature-dev --plugin-dir ./plugins/prd --plugin-dir ./plugins/spec-task-manager --plugin-dir ./plugins/ralph-task-executor
 ```
 
 ### Usage
@@ -40,6 +63,9 @@ Once installed, plugins are available via slash commands:
 
 # Analyze a specification and create tasks
 /spec-task-manager:analyze docs/feature-spec.md
+
+# Execute tasks automatically via ralph-loop
+/ralph-task-executor:execute tasks/feature-spec.tasks.json --auto-sync
 ```
 
 ## Plugin Details
@@ -105,6 +131,32 @@ Transforms specification documents into actionable task lists optimized for AI a
 
 [Full documentation](./plugins/spec-task-manager/README.md)
 
+### ralph-task-executor
+
+Automated task execution engine that bridges spec-task-manager with ralph-loop for continuous development workflows.
+
+**Commands:**
+| Command | Description |
+|---------|-------------|
+| `execute <file>` | Start automated task execution |
+| `exec-status` | Show progress and metrics |
+| `pause` | Pause execution loop |
+| `resume` | Resume paused execution |
+| `abort` | Stop execution entirely |
+| `sync` | Sync completions to task file |
+| `retry <task-id>` | Retry a blocked task |
+
+**Features:**
+- Task-to-prompt conversion with dependency context
+- Sequential or parallel execution modes
+- Configurable auto-sync to task file
+- Failure handling with blocked task cascade
+- Progress monitoring and timing metrics
+
+**Dependencies:** Requires `spec-task-manager` and `ralph-loop` plugins
+
+[Full documentation](./plugins/ralph-task-executor/README.md)
+
 ## Project Structure
 
 ```
@@ -122,11 +174,16 @@ claude-plugins/
 │   ├── prd/                   # PRD generator
 │   │   ├── .claude-plugin/plugin.json
 │   │   └── SKILL.md
-│   └── spec-task-manager/     # Specification task manager
+│   ├── spec-task-manager/     # Specification task manager
+│   │   ├── .claude-plugin/plugin.json
+│   │   ├── commands/*.md
+│   │   ├── agents/spec-analyzer.md
+│   │   └── skills/spec-task-management/
+│   └── ralph-task-executor/   # Automated task execution
 │       ├── .claude-plugin/plugin.json
 │       ├── commands/*.md
-│       ├── agents/spec-analyzer.md
-│       └── skills/spec-task-management/
+│       ├── agents/task-executor.md
+│       └── skills/task-execution/
 ├── CLAUDE.md                  # Project instructions for Claude Code
 └── README.md
 ```

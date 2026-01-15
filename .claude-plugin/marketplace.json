@@ -39,6 +39,19 @@
       "source": "./plugins/spec-task-manager",
       "category": "development",
       "homepage": "https://github.com/anthropics/claude-plugins-public/tree/main/plugins/spec-task-manager"
+    },
+    {
+      "name": "ralph-task-executor",
+      "description": "Automated task execution engine integrating spec-task-manager with ralph-loop for continuous development workflows",
+      "version": "0.1.0",
+      "author": {
+        "name": "Stephen Sequenzia",
+        "email": "sequenzia@gmail.com"
+      },
+      "source": "./plugins/ralph-task-executor",
+      "category": "development",
+      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/ralph-task-executor",
+      "dependencies": ["spec-task-manager", "ralph-loop"]
     }
   ]
 }
