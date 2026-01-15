@@ -1,0 +1,8 @@
+{
+  "name": "prd-generator",
+  "description": "A plugin for creating and managing PRDs (Product Requirement Documents).",
+  "author": {
+    "name": "Stephen Sequenzia",
+    "email": "sequenzia@gmail.com"
+  }
+}

@@ -1,8 +1,0 @@
-{
-  "name": "prd",
-  "description": "A plugin for creatging and managing PRDs (Product Requirement Documents).",
-  "author": {
-    "name": "Stephen Sequenzia",
-    "email": "sequenzia@gmail.com"
-  }
-}

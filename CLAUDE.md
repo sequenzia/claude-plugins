@@ -14,7 +14,7 @@ claude-plugins/
 │   └── marketplace.json      # Central plugin registry
 └── plugins/
     ├── feature-dev/          # 7-phase feature development workflow
-    ├── prd/                   # PRD generation
+    ├── prd-generator/        # PRD generation
     ├── spec-task-manager/    # Spec decomposition into tasks
     └── ralph-task-executor/  # Automated task execution via ralph-loop
 ```
@@ -92,7 +92,7 @@ Transforms specifications into structured task lists with dependency tracking.
 
 **Execution phases**: Auto-calculated for parallel work
 
-### prd
+### prd-generator
 Generates Product Requirements Documents with goals, user stories, functional requirements, and success metrics.
 
 **Output**: `tasks/prd-[feature-name].md`
