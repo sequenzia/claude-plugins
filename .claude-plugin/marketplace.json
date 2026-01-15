@@ -50,8 +50,7 @@
       },
       "source": "./plugins/ralph-task-executor",
       "category": "development",
-      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/ralph-task-executor",
-      "dependencies": ["spec-task-manager", "ralph-loop"]
+      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/ralph-task-executor"
     }
   ]
 }
