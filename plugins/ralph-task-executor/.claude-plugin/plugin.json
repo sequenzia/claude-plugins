@@ -13,11 +13,5 @@
     "spec-task-manager",
     "continuous-development",
     "iterative-execution"
-  ],
-  "dependencies": {
-    "plugins": [
-      "spec-task-manager",
-      "ralph-loop"
-    ]
-  }
+  ]
 }
