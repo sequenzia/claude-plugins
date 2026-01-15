@@ -1,0 +1,9 @@
+{
+  "name": "spec-task-manager",
+  "version": "0.1.0",
+  "description": "Transform specification documents into structured, actionable task lists optimized for AI coding agents",
+  "author": {
+    "name": "Claude Code Plugin"
+  },
+  "keywords": ["specifications", "task-management", "prd", "requirements", "decomposition"]
+}

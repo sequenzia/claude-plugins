@@ -22,12 +22,23 @@
       "name": "feature-dev",
       "description": "Comprehensive feature development workflow with specialized agents for codebase exploration, architecture design, and quality review",
       "author": {
-        "name": "Anthropic",
-        "email": "support@anthropic.com"
+        "name": "Stephen Sequenzia",
+        "email": "sequenzia@gmail.com"
       },
       "source": "./plugins/feature-dev",
       "category": "development",
       "homepage": "https://github.com/anthropics/claude-plugins-public/tree/main/plugins/feature-dev"
+    },
+    {
+      "name": "spec-task-manager",
+      "description": "A plugin for creating and managing tasks from specifications",
+      "author": {
+        "name": "Stephen Sequenzia",
+        "email": "sequenzia@gmail.com"
+      },
+      "source": "./plugins/spec-task-manager",
+      "category": "development",
+      "homepage": "https://github.com/anthropics/claude-plugins-public/tree/main/plugins/spec-task-manager"
     }
   ]
 }
