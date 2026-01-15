@@ -41,9 +41,11 @@ Analyze the specification document provided and generate a comprehensive task li
 
 ## Output
 
-Write the task list to `tasks/<project-name>.tasks.json` where `<project-name>` is derived from the specification filename.
-
 Create the `tasks/` directory if it doesn't exist.
+
+### 1. JSON Task File
+
+Write the task list to `tasks/<project-name>.tasks.json` where `<project-name>` is derived from the specification filename.
 
 Use the JSON schema from the spec-task-management skill for proper formatting:
 - Include full metadata (source_document, generated_at, version, etc.)
@@ -51,8 +53,77 @@ Use the JSON schema from the spec-task-management skill for proper formatting:
 - Dependency graph with nodes and edges
 - Execution phases for parallel work
 
-After writing, display a summary:
+### 2. Markdown Summary File
+
+Write a markdown summary to `tasks/<project-name>.tasks.md` with the following format:
+
+```markdown
+# Task Analysis: <project-name>
+
+**Source:** <spec-path>
+**Generated:** <timestamp>
+
+## Summary
+
+- **Total tasks:** X
+- **Execution phases:** Y
+- **Ready to start:** Z
+
+## By Priority
+
+| Priority | Count |
+|----------|-------|
+| Critical | X |
+| High | Y |
+| Medium | Z |
+| Low | W |
+
+## By Complexity
+
+| Size | Count |
+|------|-------|
+| XS | X |
+| S | Y |
+| M | Z |
+| L | W |
+| XL | V |
+
+## Execution Phases
+
+### Phase 1: <phase-name>
+
+| Task | Title | Priority | Complexity |
+|------|-------|----------|------------|
+| TASK-001 | <title> | high | M |
+| TASK-002 | <title> | medium | S |
+
+### Phase 2: <phase-name>
+
+| Task | Title | Priority | Complexity |
+|------|-------|----------|------------|
+| TASK-003 | <title> | high | L |
+
+(continue for all phases)
+
+## Ready to Start
+
+Tasks with no blocking dependencies:
+
+- **TASK-001:** <title>
+- **TASK-002:** <title>
+
+## Next Steps
+
+1. View task details: `/spec-task-manager:show TASK-XXX`
+2. Start recommended tasks: `/spec-task-manager:next`
+3. Mark tasks complete: `/spec-task-manager:complete TASK-XXX`
+```
+
+### 3. Display Summary
+
+After writing both files, display a brief summary to the console:
 - Total tasks generated
 - Breakdown by priority and complexity
 - Number of execution phases
 - Tasks ready to start (Phase 1)
+- Paths to both output files
