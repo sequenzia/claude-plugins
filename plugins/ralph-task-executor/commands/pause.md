@@ -2,6 +2,7 @@
 description: Pause the current task execution loop
 argument-hint: [reason]
 allowed-tools: [Read, Write, Bash]
+allowed-paths: [".claude/ralph-task-executor.state.json"]
 model: inherit
 ---
 

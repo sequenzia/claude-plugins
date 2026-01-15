@@ -2,6 +2,7 @@
 description: Retry a blocked task with increased iterations or modified prompt
 argument-hint: <task-id> [--max-iterations N] [--additional-context "..."]
 allowed-tools: [Read, Write, Bash, TodoWrite]
+allowed-paths: [".claude/ralph-task-executor.state.json"]
 model: inherit
 ---
 

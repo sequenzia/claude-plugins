@@ -2,6 +2,7 @@
 description: Abort execution entirely and clean up state
 argument-hint: [--keep-state]
 allowed-tools: [Read, Write, Bash]
+allowed-paths: [".claude/ralph-task-executor.state.json"]
 model: inherit
 ---
 

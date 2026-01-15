@@ -2,6 +2,7 @@
 description: Resume a paused execution loop
 argument-hint: [--skip-current] [--task-id TASK-XXX]
 allowed-tools: [Read, Write, Bash, TodoWrite]
+allowed-paths: [".claude/ralph-task-executor.state.json"]
 model: inherit
 ---
 

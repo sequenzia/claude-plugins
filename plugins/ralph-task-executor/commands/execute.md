@@ -2,6 +2,7 @@
 description: Start automated execution of tasks from a spec-task-manager JSON file
 argument-hint: <tasks-file> [--parallel] [--auto-sync] [--max-iterations N]
 allowed-tools: [Read, Write, Glob, Bash, TodoWrite]
+allowed-paths: [".claude/ralph-task-executor.state.json"]
 model: inherit
 ---
 

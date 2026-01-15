@@ -2,6 +2,7 @@
 description: Synchronize pending completions to spec-task-manager task file
 argument-hint: [--all | --task-id TASK-XXX]
 allowed-tools: [Read, Write, Glob]
+allowed-paths: [".claude/ralph-task-executor.state.json"]
 model: inherit
 ---
 
