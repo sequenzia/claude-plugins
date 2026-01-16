@@ -1,0 +1,8 @@
+{
+  "name": "sdd-manager",
+  "version": "0.1.0",
+  "description": "Spec Driven Development document management - conducts dynamic interviews to generate PRDs, Tech Specs, and Design Specs optimized for AI coding agents",
+  "author": {
+    "name": "sequenzia"
+  }
+}
