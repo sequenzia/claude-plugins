@@ -51,6 +51,18 @@
       "source": "./plugins/sdd-manager",
       "category": "development",
       "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/sdd-manager"
+    },
+    {
+      "name": "spec-manager",
+      "description": "PRD creation through guided multi-round interviews - analyze requirements and generate comprehensive Product Requirements Documents",
+      "version": "0.1.0",
+      "author": {
+        "name": "Stephen Sequenzia",
+        "email": "sequenzia@gmail.com"
+      },
+      "source": "./plugins/spec-manager",
+      "category": "development",
+      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/spec-manager"
     }
   ]
 }

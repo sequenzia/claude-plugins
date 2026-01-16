@@ -1,0 +1,8 @@
+{
+  "name": "spec-manager",
+  "version": "0.1.0",
+  "description": "PRD creation through guided multi-round interviews - analyze requirements and generate comprehensive Product Requirements Documents",
+  "author": {
+    "name": "sequenzia"
+  }
+}
