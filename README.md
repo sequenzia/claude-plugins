@@ -7,7 +7,6 @@ A collection of plugins for [Claude Code](https://claude.ai/code) that enhance A
 | Plugin | Description | Commands |
 |--------|-------------|----------|
 | [feature-dev](./plugins/feature-dev/) | 7-phase feature development workflow with specialized agents | `/feature-dev` |
-| [prd-generator](./plugins/prd-generator/) | Product Requirements Document generator | `/prd-generator` |
 | [spec-task-manager](./plugins/spec-task-manager/) | Transform specifications into structured task lists | `/spec-task-manager:*` |
 | [ralph-task-executor](./plugins/ralph-task-executor/) | Automated task execution via ralph-loop | `/ralph-task-executor:*` |
 
@@ -28,7 +27,6 @@ Add this repository as a plugin marketplace directly in Claude Code:
 
 # Install individual plugins
 /plugin install feature-dev@sequenzia/claude-plugins
-/plugin install prd-generator@sequenzia/claude-plugins
 /plugin install spec-task-manager@sequenzia/claude-plugins
 /plugin install ralph-task-executor@sequenzia/claude-plugins
 ```
@@ -47,7 +45,7 @@ cd claude-plugins
 claude --plugin-dir ./plugins/feature-dev
 
 # Or use all plugins
-claude --plugin-dir ./plugins/feature-dev --plugin-dir ./plugins/prd-generator --plugin-dir ./plugins/spec-task-manager --plugin-dir ./plugins/ralph-task-executor
+claude --plugin-dir ./plugins/feature-dev --plugin-dir ./plugins/spec-task-manager --plugin-dir ./plugins/ralph-task-executor
 ```
 
 ### Usage
@@ -57,9 +55,6 @@ Once installed, plugins are available via slash commands:
 ```bash
 # Start a guided feature development workflow
 /feature-dev Add user authentication with OAuth
-
-# Generate a PRD for a new feature
-/prd-generator Task priority system
 
 # Analyze a specification and create tasks
 /spec-task-manager:analyze docs/feature-spec.md
@@ -88,25 +83,6 @@ A comprehensive 7-phase workflow for building features:
 - `code-reviewer` - Reviews for bugs, quality, and conventions
 
 [Full documentation](./plugins/feature-dev/README.md)
-
-### prd-generator
-
-Generates structured Product Requirements Documents through a guided process:
-
-1. Ask 3-5 clarifying questions with lettered options
-2. Generate PRD with goals, user stories, and requirements
-3. Save to `tasks/prd-[feature-name].md`
-
-**PRD Sections:**
-- Introduction/Overview
-- Goals
-- User Stories with Acceptance Criteria
-- Functional Requirements
-- Non-Goals (Out of Scope)
-- Technical Considerations
-- Success Metrics
-
-[Full documentation](./plugins/prd-generator/SKILL.md)
 
 ### spec-task-manager
 
@@ -171,9 +147,6 @@ claude-plugins/
 │   │       ├── code-explorer.md
 │   │       ├── code-architect.md
 │   │       └── code-reviewer.md
-│   ├── prd-generator/         # PRD generator
-│   │   ├── .claude-plugin/plugin.json
-│   │   └── SKILL.md
 │   ├── spec-task-manager/     # Specification task manager
 │   │   ├── .claude-plugin/plugin.json
 │   │   ├── commands/*.md

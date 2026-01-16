@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This is a **Claude Code Plugin Directory** containing four plugins for feature development, PRD generation, specification-based task management, and automated task execution. Plugins are defined entirely in Markdown files with YAML frontmatter.
+This is a **Claude Code Plugin Directory** containing three plugins for feature development, specification-based task management, and automated task execution. Plugins are defined entirely in Markdown files with YAML frontmatter.
 
 ## Project Structure
 
@@ -14,7 +14,6 @@ claude-plugins/
 │   └── marketplace.json      # Central plugin registry
 └── plugins/
     ├── feature-dev/          # 7-phase feature development workflow
-    ├── prd-generator/        # PRD generation
     ├── spec-task-manager/    # Spec decomposition into tasks
     └── ralph-task-executor/  # Automated task execution via ralph-loop
 ```
@@ -91,11 +90,6 @@ Transforms specifications into structured task lists with dependency tracking.
 - Resource: Coordination (tasks share files)
 
 **Execution phases**: Auto-calculated for parallel work
-
-### prd-generator
-Generates Product Requirements Documents with goals, user stories, functional requirements, and success metrics.
-
-**Output**: `tasks/prd-[feature-name].md`
 
 ### ralph-task-executor
 Automated task execution engine integrating spec-task-manager with ralph-loop for continuous development workflows.

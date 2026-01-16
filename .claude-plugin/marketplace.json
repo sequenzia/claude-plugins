@@ -7,18 +7,6 @@
   },
   "plugins": [
     {
-      "name": "prd-generator",
-      "description": "A plugin for creating and managing PRDs (Product Requirement Documents)",
-      "version": "1.0.0",
-      "author": {
-        "name": "Stephen Sequenzia",
-        "email": "sequenzia@gmail.com"
-      },
-      "source": "./plugins/prd-generator",
-      "category": "development",
-      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/prd-generator"
-    },
-    {
       "name": "feature-dev",
       "description": "Comprehensive feature development workflow with specialized agents for codebase exploration, architecture design, and quality review",
       "author": {
