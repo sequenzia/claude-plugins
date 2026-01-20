@@ -38,6 +38,32 @@
           "minimum": 0,
           "maximum": 100,
           "description": "Percentage of tasks completed"
+        },
+        "context_config": {
+          "type": "object",
+          "properties": {
+            "max_tokens": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Maximum tokens available in context window"
+            },
+            "reserve_tokens": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Tokens reserved for agent responses and overhead"
+            },
+            "effective_limit": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Effective token limit (max_tokens - reserve_tokens)"
+            }
+          },
+          "description": "Configuration for context window grouping"
+        },
+        "total_context_groups": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of context groups"
         }
       }
     },
@@ -137,6 +163,24 @@
           "estimated_effort": {
             "type": "string",
             "description": "Optional time estimate (e.g., '2-4 hours', '1 day')"
+          },
+          "context_group_id": {
+            "type": "string",
+            "pattern": "^CG-\\d{3,}$",
+            "description": "ID of the context group this task belongs to (e.g., CG-001)"
+          },
+          "context_group_start": {
+            "type": "boolean",
+            "description": "True if this is the first task in its context group"
+          },
+          "context_group_end": {
+            "type": "boolean",
+            "description": "True if this is the last task in its context group"
+          },
+          "estimated_tokens": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Estimated tokens required to complete this task"
           }
         }
       }
@@ -187,6 +231,54 @@
           "description": {
             "type": "string",
             "description": "Explanation of what this phase accomplishes"
+          }
+        }
+      }
+    },
+    "context_groups": {
+      "type": "array",
+      "description": "Groups of tasks organized by context window capacity",
+      "items": {
+        "type": "object",
+        "required": ["id", "tasks", "estimated_tokens"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^CG-\\d{3,}$",
+            "description": "Unique context group identifier (e.g., CG-001)"
+          },
+          "tasks": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^TASK-\\d{3,}$" },
+            "description": "Task IDs in this context group, in execution order"
+          },
+          "estimated_tokens": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Total estimated tokens for all tasks in this group"
+          },
+          "phases_covered": {
+            "type": "array",
+            "items": { "type": "integer", "minimum": 1 },
+            "description": "Execution phases included in this context group"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "active", "completed"],
+            "description": "Current status of this context group"
+          },
+          "oversized_warning": {
+            "type": "boolean",
+            "description": "True if group contains a task exceeding token limit"
+          },
+          "context_handoff": {
+            "type": "object",
+            "properties": {
+              "from_group": { "type": "string" },
+              "to_group": { "type": "string" },
+              "split_reason": { "type": "string" }
+            },
+            "description": "Metadata for dependency chains split across groups"
           }
         }
       }

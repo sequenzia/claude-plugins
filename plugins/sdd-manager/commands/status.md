@@ -19,12 +19,18 @@ Display the current status of the task list.
    - Tasks by priority breakdown
    - Tasks by complexity breakdown
 
-3. **Identify actionable tasks**
+3. **Calculate context group metrics (if groups exist)**
+   - Total context groups
+   - Groups completed vs pending
+   - Active context group and its progress
+   - Estimated tokens used vs available
+
+5. **Identify actionable tasks**
    - Tasks ready to start (not_started with no blockers)
    - Currently blocked tasks and what's blocking them
    - In-progress tasks
 
-4. **Display summary**
+6. **Display summary**
 
 Format the output as:
 
@@ -50,6 +56,17 @@ Format the output as:
 - Medium: Z
 - Low: W
 
+**Context Groups** (if configured)
+| Group | Status | Tasks | Progress | Est. Tokens |
+|-------|--------|-------|----------|-------------|
+| CG-001 | completed | 5 | 5/5 (100%) | 72,000 |
+| CG-002 | active | 4 | 1/4 (25%) | 68,500 |
+| CG-003 | pending | 3 | 0/3 (0%) | 45,200 |
+
+**Active Group:** CG-002
+- Effective Limit: 80,000 tokens
+- Remaining in group: TASK-006, TASK-007, TASK-008
+
 **Ready to Start**
 - TASK-XXX: <title> (priority, complexity)
 - TASK-YYY: <title> (priority, complexity)
@@ -58,4 +75,23 @@ Format the output as:
 - TASK-ZZZ: Blocked by TASK-AAA, TASK-BBB
 ```
 
-If no task file found, explain how to create one using `/spec-task-manager:analyze`.
+### Context Group Status (when groups exist)
+
+If context groups have been generated, include additional section:
+
+```
+**Context Window Configuration**
+- Max Tokens: 100,000
+- Reserved: 20,000
+- Effective Limit: 80,000
+
+**Group Progress**
+- Groups Completed: 1 of 3
+- Active Group: CG-002 (25% complete)
+- Remaining Groups: 2
+
+**Recommended Action:**
+Complete CG-002 tasks, then run `/sdd-manager:next-group` for CG-003
+```
+
+If no task file found, explain how to create one using `/sdd-manager:analyze`.

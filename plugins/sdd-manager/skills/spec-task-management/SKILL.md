@@ -81,6 +81,39 @@ Group tasks into phases based on dependency analysis:
 
 Calculate phases to enable maximum parallel execution by multiple agents.
 
+### 7. Context Window Grouping
+
+Organize tasks into context groups that fit within AI coding agent context windows:
+
+**Why Context Groups Matter:**
+- AI coding agents have limited context windows (e.g., 100K tokens)
+- Loading too many tasks exhausts context capacity
+- Context groups enable efficient agent handoffs between sessions
+
+**Grouping Algorithm:**
+1. Calculate effective limit: `max_tokens - reserve_tokens`
+2. Topologically sort tasks by execution phase
+3. Bin-pack tasks respecting:
+   - Token limits (complexity-based estimation)
+   - Hard dependencies (must be in same or earlier group)
+4. Mark first/last tasks with boundary flags
+
+**Token Estimation:**
+| Complexity | Base Tokens | Description |
+|------------|-------------|-------------|
+| XS | 500 | Single function, < 20 lines |
+| S | 1,500 | Single file, 20-100 lines |
+| M | 4,000 | Multiple files, 100-300 lines |
+| L | 10,000 | Multiple components, 300-800 lines |
+| XL | 25,000 | System-wide, > 800 lines |
+
+**Overhead:**
+- Base per task: 200 tokens
+- Per hard dependency: 100 tokens
+- Group transition: 500 tokens
+
+Use `/sdd-manager:context-groups` to generate groups after analyzing a specification.
+
 ## Output Format
 
 Generate task lists as JSON following the schema in `references/task-schema.json`.
@@ -164,6 +197,7 @@ Maintain stable task IDs across regenerations:
 For detailed patterns and schema, consult:
 - **`references/task-schema.json`** - Complete JSON schema for task list format
 - **`references/dependency-patterns.md`** - Detailed dependency identification patterns
+- **`references/context-defaults.json`** - Default configuration for context grouping
 
 ## Quick Reference
 
@@ -176,8 +210,21 @@ For detailed patterns and schema, consult:
 6. Generate testing criteria
 7. Write to `tasks/<project-name>.tasks.json`
 
+**Context grouping flow:**
+1. Run `/sdd-manager:context-groups` on existing task list
+2. Algorithm bin-packs tasks into groups respecting token limits
+3. Each task gets `context_group_id`, boundary flags, token estimates
+4. `context_groups` array added to task file with summaries
+
+**Agent execution workflow:**
+1. `/sdd-manager:next-group` - Get next group to work on
+2. Work through tasks in group, marking complete
+3. When group complete, agent resets context
+4. New session runs `/sdd-manager:next-group` for next group
+
 **Next task selection criteria:**
 1. Status is "not_started"
 2. No incomplete hard dependencies (blocked_by is empty)
-3. Highest priority first
-4. Lowest complexity as tiebreaker (quick wins)
+3. Prefer tasks in active context group
+4. Highest priority first
+5. Lowest complexity as tiebreaker (quick wins)
