@@ -4,7 +4,7 @@ A collection of Claude Code plugins for development tools, productivity, and MCP
 
 ## Plugins
 
-### sdd-manager
+### task-manager
 
 Spec Driven Development document management plugin. Conducts dynamic interviews to generate PRDs, Tech Specs, and Design Specs optimized for AI coding agents.
 
@@ -57,7 +57,7 @@ claude plugins add sequenzia/claude-plugins
 Or install individual plugins:
 
 ```bash
-claude plugins add sequenzia/claude-plugins/plugins/sdd-manager
+claude plugins add sequenzia/claude-plugins/plugins/task-manager
 claude plugins add sequenzia/claude-plugins/plugins/prd-generator
 ```
 

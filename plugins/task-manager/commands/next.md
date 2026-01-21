@@ -76,7 +76,7 @@ Based on priority, dependencies, and quick-win potential:
 **Current Progress:** X% complete (Y of Z tasks)
 
 To start a task, begin working on it. Mark complete with:
-`/sdd-manager:complete TASK-XXX`
+`/task-manager:complete TASK-XXX`
 ```
 
 ### Context Switch Indicator
@@ -98,7 +98,7 @@ Remaining in CG-001:
 - TASK-004: Create auth middleware (blocked by TASK-003)
 - TASK-005: Add session handling (not_started)
 
-If you must switch groups, use `/sdd-manager:next-group` to properly transition.
+If you must switch groups, use `/task-manager:next-group` to properly transition.
 ```
 
 If no tasks are available (all blocked or complete), explain the situation.
@@ -111,6 +111,6 @@ All tasks in CG-001 are complete.
 
 **Next Steps:**
 1. Save any important context/outputs
-2. Run `/sdd-manager:next-group` to start CG-002
+2. Run `/task-manager:next-group` to start CG-002
 3. Reset your context window for fresh capacity
 ```

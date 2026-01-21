@@ -91,7 +91,7 @@ If context groups have been generated, include additional section:
 - Remaining Groups: 2
 
 **Recommended Action:**
-Complete CG-002 tasks, then run `/sdd-manager:next-group` for CG-003
+Complete CG-002 tasks, then run `/task-manager:next-group` for CG-003
 ```
 
-If no task file found, explain how to create one using `/sdd-manager:analyze`.
+If no task file found, explain how to create one using `/task-manager:analyze`.

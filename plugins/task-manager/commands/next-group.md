@@ -17,7 +17,7 @@ Get the next context group that should be executed by an AI coding agent. This c
 
 3. **Verify context groups exist**
    - Check for `context_groups` array in task file
-   - If not found, suggest running `/sdd-manager:context-groups` first
+   - If not found, suggest running `/task-manager:context-groups` first
 
 4. **Find active or next pending group**
    - First, look for a group with `status: "active"` (already started)
@@ -83,7 +83,7 @@ These outputs are available for reference in this group.
 
 ---
 
-When all tasks in this group are complete, run `/sdd-manager:next-group` to move to the next context group.
+When all tasks in this group are complete, run `/task-manager:next-group` to move to the next context group.
 ```
 
 ## Edge Cases
@@ -94,7 +94,7 @@ When all tasks in this group are complete, run `/sdd-manager:next-group` to move
 
 Context groups have not been generated yet.
 
-Run `/sdd-manager:context-groups [project-name]` to create context groups from your task list.
+Run `/task-manager:context-groups [project-name]` to create context groups from your task list.
 ```
 
 ### All Groups Complete
@@ -106,7 +106,7 @@ Run `/sdd-manager:context-groups [project-name]` to create context groups from y
 - Total Tasks Completed: 12
 
 All tasks from the specification have been completed.
-Use `/sdd-manager:status` for a full completion report.
+Use `/task-manager:status` for a full completion report.
 ```
 
 ### Group Has Oversized Warning
@@ -120,7 +120,7 @@ Use `/sdd-manager:status` for a full completion report.
 - Estimated Tokens: 25,200
 
 This task may require breaking into smaller subtasks or extending the context window.
-Consider running `/sdd-manager:update TASK-015 --split` to decompose this task.
+Consider running `/task-manager:update TASK-015 --split` to decompose this task.
 ```
 
 ### Context Handoff Required
@@ -146,15 +146,15 @@ Ensure these outputs are available before starting this group.
 This command is designed for the following workflow:
 
 1. **Initial Setup**
-   - `/sdd-manager:analyze` - Generate tasks from spec
-   - `/sdd-manager:context-groups` - Organize into context groups
+   - `/task-manager:analyze` - Generate tasks from spec
+   - `/task-manager:context-groups` - Organize into context groups
 
 2. **Execution Loop** (per coding agent session)
-   - `/sdd-manager:next-group` - Get current group to work on
+   - `/task-manager:next-group` - Get current group to work on
    - Work through tasks in the group
-   - Mark tasks complete with `/sdd-manager:complete TASK-XXX`
+   - Mark tasks complete with `/task-manager:complete TASK-XXX`
    - When group complete, agent resets context
 
 3. **New Agent Session**
-   - `/sdd-manager:next-group` - Gets next pending group
+   - `/task-manager:next-group` - Gets next pending group
    - Fresh context, continues from where previous session ended

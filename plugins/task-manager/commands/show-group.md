@@ -143,9 +143,9 @@ Tasks with all dependencies satisfied:
 ---
 
 **Commands:**
-- Mark complete: `/sdd-manager:complete TASK-XXX`
-- Update task: `/sdd-manager:update TASK-XXX --status in_progress`
-- See all groups: `/sdd-manager:status`
+- Mark complete: `/task-manager:complete TASK-XXX`
+- Update task: `/task-manager:update TASK-XXX --status in_progress`
+- See all groups: `/task-manager:status`
 ```
 
 ## Edge Cases
@@ -161,7 +161,7 @@ The group "CG-005" does not exist in this task list.
 - CG-002 (4 tasks, pending)
 - CG-003 (3 tasks, pending)
 
-Use `/sdd-manager:show-group CG-001` to view a specific group.
+Use `/task-manager:show-group CG-001` to view a specific group.
 ```
 
 ### No Context Groups Exist
@@ -170,7 +170,7 @@ Use `/sdd-manager:show-group CG-001` to view a specific group.
 
 Context groups have not been generated for this project.
 
-Run `/sdd-manager:context-groups [project-name]` to organize tasks into context groups.
+Run `/task-manager:context-groups [project-name]` to organize tasks into context groups.
 ```
 
 ### Group Has Warnings
@@ -213,13 +213,13 @@ Ensure you have access to these before starting.
 
 ```bash
 # Show specific group
-/sdd-manager:show-group CG-001
+/task-manager:show-group CG-001
 
 # Show group from specific project
-/sdd-manager:show-group CG-002 my-project
+/task-manager:show-group CG-002 my-project
 
 # Common workflow
-/sdd-manager:status              # See all groups overview
-/sdd-manager:show-group CG-001   # Detailed view of group 1
-/sdd-manager:next-group          # Get next actionable group
+/task-manager:status              # See all groups overview
+/task-manager:show-group CG-001   # Detailed view of group 1
+/task-manager:next-group          # Get next actionable group
 ```

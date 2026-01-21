@@ -6,8 +6,8 @@ This repository contains Claude Code plugins for development tools and productiv
 
 ## Plugins
 
-### sdd-manager
-Location: `plugins/sdd-manager/`
+### task-manager
+Location: `plugins/task-manager/`
 
 Spec Driven Development document management. Generates and manages PRDs, Tech Specs, and Design Specs with task tracking capabilities.
 

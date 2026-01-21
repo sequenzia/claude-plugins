@@ -154,8 +154,8 @@ Format output as:
 ---
 
 **Next Steps:**
-- Use `/sdd-manager:next-group` to get the first group ready for execution
-- Use `/sdd-manager:show-group CG-001` to see group details
+- Use `/task-manager:next-group` to get the first group ready for execution
+- Use `/task-manager:show-group CG-001` to see group details
 - Coding agents should reset context between groups
 ```
 
@@ -187,11 +187,11 @@ Format output as:
 
 ### No Tasks to Group
 - Display message: "No unassigned tasks found"
-- Suggest running `/sdd-manager:analyze` first
+- Suggest running `/task-manager:analyze` first
 
 ## Example Output
 
-After running `/sdd-manager:context-groups my-project --max-tokens=100000`:
+After running `/task-manager:context-groups my-project --max-tokens=100000`:
 
 ```json
 {

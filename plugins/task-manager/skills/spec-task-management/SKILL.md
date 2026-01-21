@@ -112,7 +112,7 @@ Organize tasks into context groups that fit within AI coding agent context windo
 - Per hard dependency: 100 tokens
 - Group transition: 500 tokens
 
-Use `/sdd-manager:context-groups` to generate groups after analyzing a specification.
+Use `/task-manager:context-groups` to generate groups after analyzing a specification.
 
 ## Output Format
 
@@ -211,16 +211,16 @@ For detailed patterns and schema, consult:
 7. Write to `tasks/<project-name>.tasks.json`
 
 **Context grouping flow:**
-1. Run `/sdd-manager:context-groups` on existing task list
+1. Run `/task-manager:context-groups` on existing task list
 2. Algorithm bin-packs tasks into groups respecting token limits
 3. Each task gets `context_group_id`, boundary flags, token estimates
 4. `context_groups` array added to task file with summaries
 
 **Agent execution workflow:**
-1. `/sdd-manager:next-group` - Get next group to work on
+1. `/task-manager:next-group` - Get next group to work on
 2. Work through tasks in group, marking complete
 3. When group complete, agent resets context
-4. New session runs `/sdd-manager:next-group` for next group
+4. New session runs `/task-manager:next-group` for next group
 
 **Next task selection criteria:**
 1. Status is "not_started"
