@@ -12,7 +12,7 @@ A Claude Code plugin that generates Product Requirements Documents (PRDs) throug
 
 ## Installation
 
-1. Copy the `prd-generator` folder to your Claude Code plugins directory
+1. Copy the `prd-tools` folder to your Claude Code plugins directory
 2. Restart Claude Code or reload plugins
 
 ## Usage
@@ -22,7 +22,7 @@ A Claude Code plugin that generates Product Requirements Documents (PRDs) throug
 Run the create command to start generating a PRD:
 
 ```
-/prd-generator:create
+/prd-tools:create
 ```
 
 This will:
@@ -48,7 +48,7 @@ This will:
 
 ### Settings File
 
-Create a settings file at `.claude/prd-generator.local.md` to customize the plugin:
+Create a settings file at `.claude/prd-tools.local.md` to customize the plugin:
 
 ```yaml
 ---
@@ -166,11 +166,11 @@ Research findings are automatically formatted for PRD incorporation and include 
 ## File Structure
 
 ```
-prd-generator/
+prd-tools/
 ├── .claude-plugin/
 │   └── plugin.json           # Plugin manifest
 ├── commands/
-│   └── create.md             # /prd-generator:create command
+│   └── create.md             # /prd-tools:create command
 ├── agents/
 │   ├── interview-agent.md    # Adaptive interview agent
 │   └── research-agent.md     # On-demand research agent
@@ -188,7 +188,7 @@ prd-generator/
 ## Troubleshooting
 
 ### PRD not saving to expected location
-Check your `.claude/prd-generator.local.md` settings file for the correct `output_path` format.
+Check your `.claude/prd-tools.local.md` settings file for the correct `output_path` format.
 
 ### Interview seems too short/long
 The interview depth is based on the level you select. Choose "Full technical documentation" for the most comprehensive interview.

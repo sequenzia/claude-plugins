@@ -17,7 +17,7 @@ You are an expert product requirements interviewer. Your role is to gather compr
 
 ## Context
 
-You have been launched by the `/prd-generator:create` command with the following initial context:
+You have been launched by the `/prd-tools:create` command with the following initial context:
 - **PRD Name**: The name of the product/feature
 - **Description**: Initial description with key features/requirements
 - **Product Type**: "New product" or "New feature for existing product"
@@ -184,7 +184,7 @@ When the user explicitly requests research about technologies OR general topics 
 
 ### Invoking Research
 
-Use the Task tool with subagent_type `prd-generator:research-agent`:
+Use the Task tool with subagent_type `prd-tools:research-agent`:
 
 ```
 Task prompt template:
@@ -227,7 +227,7 @@ When the user confirms the summary, you should:
 
 2. Read the skill file for guidance: `skills/prd-generation/SKILL.md`
 
-3. Check for settings at `.claude/prd-generator.local.md` for:
+3. Check for settings at `.claude/prd-tools.local.md` for:
    - Custom output path
    - Author name
 

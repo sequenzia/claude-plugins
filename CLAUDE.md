@@ -11,17 +11,17 @@ Location: `plugins/task-manager/`
 
 Spec Driven Development document management. Generates and manages PRDs, Tech Specs, and Design Specs with task tracking capabilities.
 
-### prd-generator
-Location: `plugins/prd-generator/`
+### prd-tools
+Location: `plugins/prd-tools/`
 
 Generates Product Requirements Documents through an interactive interview-based workflow. Features:
 - Three depth levels: high-level overview, detailed specifications, full technical documentation
 - Adaptive interview process that adjusts based on user responses
 - On-demand research: technical docs, best practices, competitive analysis, compliance requirements
 - Codebase exploration for "new feature" type PRDs
-- Configurable output via `.claude/prd-generator.local.md`
+- Configurable output via `.claude/prd-tools.local.md`
 
-Command: `/prd-generator:create`
+Command: `/prd-tools:create`
 
 ### dx-tools
 Location: `plugins/dx-tools/`

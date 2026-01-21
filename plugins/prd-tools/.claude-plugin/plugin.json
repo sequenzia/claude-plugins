@@ -1,6 +1,6 @@
 {
-  "name": "prd-generator",
-  "version": "1.0.0",
+  "name": "prd-tools",
+  "version": "0.1.0",
   "description": "Generate Product Requirements Documents through an interactive interview-based workflow",
   "author": {
     "name": "sequenzia"

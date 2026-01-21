@@ -4,12 +4,12 @@ A collection of Claude Code plugins for development tools, productivity, and MCP
 
 ## Plugins
 
-### prd-generator
+### prd-tools
 
 Generate Product Requirements Documents through an interactive interview-based workflow.
 
 **Command:**
-- `/prd-generator:create` - Start the PRD creation workflow
+- `/prd-tools:create` - Start the PRD creation workflow
 
 **Features:**
 - **Depth Levels**: Choose from high-level overview, detailed specifications, or full technical documentation
@@ -17,7 +17,7 @@ Generate Product Requirements Documents through an interactive interview-based w
 - **On-Demand Research**: Research technical docs, best practices, competitive landscape, and compliance requirements during interviews
 - **Codebase Integration**: For "new feature" PRDs, the agent can explore your existing code
 - **Pre-compilation Review**: Summary presented for confirmation before generating the final PRD
-- **Configurable Output**: Customize output path via `.claude/prd-generator.local.md`
+- **Configurable Output**: Customize output path via `.claude/prd-tools.local.md`
 
 **Depth Options:**
 | Level | Description |
@@ -86,7 +86,7 @@ claude plugins add sequenzia/claude-plugins
 Or install individual plugins:
 
 ```bash
-claude plugins add sequenzia/claude-plugins/plugins/prd-generator
+claude plugins add sequenzia/claude-plugins/plugins/prd-tools
 claude plugins add sequenzia/claude-plugins/plugins/dx-tools
 claude plugins add sequenzia/claude-plugins/plugins/task-manager
 ```

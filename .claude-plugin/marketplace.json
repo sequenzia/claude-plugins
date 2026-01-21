@@ -19,16 +19,28 @@
       "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/task-manager"
     },
     {
-      "name": "prd-generator",
+      "name": "prd-tools",
       "description": "Generate Product Requirements Documents through an interactive interview-based workflow with depth-aware templates",
-      "version": "1.0.0",
+      "version": "0.1.0",
       "author": {
         "name": "Stephen Sequenzia",
         "email": "sequenzia@gmail.com"
       },
-      "source": "./plugins/prd-generator",
+      "source": "./plugins/prd-tools",
       "category": "development",
-      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/prd-generator"
+      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/prd-tools"
+    },
+    {
+      "name": "dx-tools",
+      "description": "Developer tools for Python package management and release workflows",
+      "version": "0.1.0",
+      "author": {
+        "name": "Stephen Sequenzia",
+        "email": "sequenzia@gmail.com"
+      },
+      "source": "./plugins/dx-tools",
+      "category": "development",
+      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/dx-tools"
     }
   ]
 }

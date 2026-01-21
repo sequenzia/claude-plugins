@@ -1,5 +1,4 @@
 ---
-name: create
 description: Create a new Product Requirements Document through an interactive interview process
 allowed_tools:
   - AskUserQuestion
@@ -16,7 +15,7 @@ You are initiating the PRD creation workflow. This process will gather requireme
 
 ### Step 1: Check for Settings
 
-First, check if there is a settings file at `.claude/prd-generator.local.md` to get any custom configuration like output path or author name.
+First, check if there is a settings file at `.claude/prd-tools.local.md` to get any custom configuration like output path or author name.
 
 ### Step 2: Gather Initial Information
 
