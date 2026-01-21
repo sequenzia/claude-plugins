@@ -104,6 +104,50 @@ git tag -d v{version}               # Delete local tag
 git push origin :refs/tags/v{version}  # Delete remote tag
 ```
 
+## Agents
+
+### Changelog Agent
+
+Analyzes git history and updates CHANGELOG.md with entries for the `[Unreleased]` section.
+
+#### When to Use
+
+- Before a release, to document recent changes
+- After completing a feature branch, to add changelog entries
+- To catch up on changelog entries for accumulated commits
+
+#### What It Does
+
+1. Reads CHANGELOG.md to find the last release version
+2. Gets git commits since the last release tag
+3. Categorizes changes based on conventional commit prefixes:
+   - `feat:` → Added
+   - `fix:` → Fixed
+   - `refactor:`, `change:`, `perf:` → Changed
+   - `security:` → Security
+   - Skips: `docs:`, `chore:`, `test:`, `ci:`, `style:`, `build:`
+4. Drafts well-formatted entries following Keep a Changelog guidelines
+5. Presents entries for your review and approval
+6. Updates CHANGELOG.md with approved entries
+
+#### Example Usage
+
+Simply ask Claude to update the changelog:
+
+```
+Update the changelog with recent commits
+```
+
+```
+Add changelog entries for the work since the last release
+```
+
+```
+What changes should go in the changelog?
+```
+
+The agent will analyze your commits and present suggested entries for approval before making any changes.
+
 ## Requirements
 
 - Python 3.8+
