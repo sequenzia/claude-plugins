@@ -28,6 +28,34 @@ Generate Product Requirements Documents through an interactive interview-based w
 
 ---
 
+### dx-tools
+
+Developer tools for Python package management and release workflows.
+
+**Command:**
+- `/dx-tools:release [version]` - Prepare and execute a Python package release
+
+**Features:**
+- **Pre-flight Checks**: Verifies clean main branch before proceeding
+- **Automated Verification**: Runs tests, linting, and build verification
+- **Semantic Versioning**: Calculates version bump from changelog entries
+- **Changelog Management**: Updates CHANGELOG.md following Keep a Changelog format
+- **Git Integration**: Commits changelog and creates annotated tags
+
+**Workflow Steps:**
+| Step | Action |
+|------|--------|
+| 1 | Pre-flight checks (main branch, clean directory) |
+| 2 | Run tests (`uv run pytest`) |
+| 3 | Run linting (`ruff check`, `ruff format --check`) |
+| 4 | Verify build (`uv build`) |
+| 5 | Calculate version from changelog |
+| 6 | Update CHANGELOG.md |
+| 7 | Commit and push changelog |
+| 8 | Create and push version tag |
+
+---
+
 ### task-manager
 
 Spec Driven Development document management plugin. Conducts dynamic interviews to generate PRDs, Tech Specs, and Design Specs optimized for AI coding agents.
@@ -59,6 +87,7 @@ Or install individual plugins:
 
 ```bash
 claude plugins add sequenzia/claude-plugins/plugins/prd-generator
+claude plugins add sequenzia/claude-plugins/plugins/dx-tools
 claude plugins add sequenzia/claude-plugins/plugins/task-manager
 ```
 

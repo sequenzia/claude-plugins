@@ -1,0 +1,8 @@
+{
+  "name": "dx-tools",
+  "version": "0.1.0",
+  "description": "Developer tools for Python package management and release workflows",
+  "author": {
+    "name": "sequenzia"
+  }
+}

@@ -23,6 +23,17 @@ Generates Product Requirements Documents through an interactive interview-based 
 
 Command: `/prd-generator:create`
 
+### dx-tools
+Location: `plugins/dx-tools/`
+
+Developer tools for Python package management and release workflows. Features:
+- Automated pre-release workflow with verification steps
+- Semantic version calculation from changelog entries
+- CHANGELOG.md updates following Keep a Changelog format
+- Integration with `uv` and `ruff` tooling
+
+Command: `/dx-tools:release [version-override]`
+
 ## Development Guidelines
 
 - Plugins follow the Claude Code plugin structure with `.claude-plugin/plugin.json` manifest
