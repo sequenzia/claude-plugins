@@ -7,6 +7,7 @@ A Claude Code plugin that generates Product Requirements Documents (PRDs) throug
 - **Interactive Interview Process**: Gathers requirements through adaptive questioning
 - **Depth-Aware Templates**: Three detail levels to match your needs
 - **Codebase Integration**: Can explore existing code for "new feature" PRDs
+- **On-Demand Research**: Research technical docs, best practices, and domain knowledge during interviews
 - **AI-Optimized Output**: PRDs structured for optimal AI assistant consumption
 
 ## Installation
@@ -103,6 +104,30 @@ The interview covers four main categories:
 - Out of scope items
 - Checkpoint gates
 
+## On-Demand Research
+
+During the interview, you can request research on any topic to inform your PRD. Simply ask the agent to research something, and it will gather current information from documentation and the web.
+
+### Research Types
+
+| Type | Example Request | What You Get |
+|------|-----------------|--------------|
+| **Technical Documentation** | "Research the Stripe subscriptions API" | API endpoints, auth methods, rate limits, SDKs |
+| **Best Practices** | "Research best practices for checkout flows" | UX patterns, industry standards, design guidelines |
+| **Competitive Analysis** | "How do competitors handle user onboarding?" | Competitor approaches, notable features, market patterns |
+| **Compliance/Regulatory** | "What GDPR requirements apply to user data?" | Compliance requirements, implementation guidelines |
+| **Domain Knowledge** | "Help me understand inventory management challenges" | Industry terminology, common workflows, problem space context |
+
+### How to Use
+
+During any point in the interview, you can say:
+- "Research the {library} documentation for {feature}"
+- "Look up best practices for {topic}"
+- "Research how competitors handle {feature}"
+- "What {compliance} requirements apply to {feature}?"
+
+Research findings are automatically formatted for PRD incorporation and include source citations.
+
 ## Generated PRD Structure
 
 ### High-Level Template Includes:
@@ -147,7 +172,8 @@ prd-generator/
 ├── commands/
 │   └── create.md             # /prd-generator:create command
 ├── agents/
-│   └── interview-agent.md    # Adaptive interview agent
+│   ├── interview-agent.md    # Adaptive interview agent
+│   └── research-agent.md     # On-demand research agent
 ├── skills/
 │   └── prd-generation/
 │       ├── SKILL.md          # PRD generation knowledge

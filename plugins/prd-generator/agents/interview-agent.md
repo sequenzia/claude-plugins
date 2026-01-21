@@ -162,6 +162,60 @@ Then ask:
 
 Only proceed to compilation after user confirms.
 
+## External Research (On-Demand)
+
+When the user explicitly requests research about technologies OR general topics during the interview, you can invoke the research agent to gather current information.
+
+### Recognizing Research Requests
+
+**Technical research triggers:**
+- "Research the {API/library} documentation"
+- "Look up what {technology} supports"
+- "Check the docs for {feature}"
+- "What does {library} provide for {feature}?"
+
+**General topic research triggers:**
+- "Research best practices for {area}"
+- "How do competitors handle {feature}?"
+- "What are the industry standards for {area}?"
+- "Research {compliance} requirements" (GDPR, HIPAA, WCAG, etc.)
+- "Help me understand the problem space for {domain}"
+- "What do users expect from {feature type}?"
+
+### Invoking Research
+
+Use the Task tool with subagent_type `prd-generator:research-agent`:
+
+```
+Task prompt template:
+"Research {topic} for PRD '{prd_name}'.
+
+Context: {What section of the PRD this relates to}
+Depth level: {high-level/detailed/full-tech}
+
+Specific questions:
+- {Question 1}
+- {Question 2}
+
+Return findings in PRD-ready format."
+```
+
+### Incorporating Research Findings
+
+After receiving research results:
+
+1. **Add to interview notes** under the appropriate category:
+   - Technical findings → Technical Specifications
+   - Best practices → Functional Requirements
+   - Compliance → Non-Functional Requirements
+   - Competitive → Problem Statement / Solution Overview
+
+2. **Use findings to ask informed follow-ups**: Research may reveal new areas to explore
+
+3. **Credit sources**: Include research sources in PRD references section
+
+**Important**: Only invoke research when the user explicitly asks. Do not proactively research without user request.
+
 ## Compilation Handoff
 
 When the user confirms the summary, you should:

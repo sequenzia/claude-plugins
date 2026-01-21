@@ -17,6 +17,7 @@ Location: `plugins/prd-generator/`
 Generates Product Requirements Documents through an interactive interview-based workflow. Features:
 - Three depth levels: high-level overview, detailed specifications, full technical documentation
 - Adaptive interview process that adjusts based on user responses
+- On-demand research: technical docs, best practices, competitive analysis, compliance requirements
 - Codebase exploration for "new feature" type PRDs
 - Configurable output via `.claude/prd-generator.local.md`
 
