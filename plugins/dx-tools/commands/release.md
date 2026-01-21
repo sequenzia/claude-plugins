@@ -1,7 +1,7 @@
 ---
 description: Prepare and execute a Python package release with verification steps
 argument-hint: [version-override]
-allowed-tools: Read, Edit, Bash, AskUserQuestion, Glob
+allowed-tools: Read, Edit, Bash, AskUserQuestion, Glob, Task
 ---
 
 # Python Release Manager
@@ -14,7 +14,7 @@ Execute a complete pre-release workflow for Python packages using `uv` and `ruff
 
 ## Workflow
 
-Execute these 8 steps in order. **Fail fast**: Stop immediately if any verification step fails.
+Execute these 9 steps in order. **Fail fast**: Stop immediately if any verification step fails.
 
 ---
 
@@ -85,15 +85,45 @@ uv build
 
 ---
 
-### Step 5: Calculate Version
+### Step 5: Changelog Update Check
 
-#### 5.1 Read CHANGELOG.md
+All verification checks have passed. Before calculating the version, offer to run the changelog-agent to ensure the `[Unreleased]` section is up-to-date.
+
+Use AskUserQuestion:
+
+```
+Would you like to run the changelog-agent to update CHANGELOG.md before proceeding?
+
+This will analyze git commits since the last release and suggest new changelog entries.
+```
+
+Options:
+1. "Yes, update changelog first (Recommended)" - Recommended option
+2. "No, continue with existing changelog"
+
+**If user selects "Yes":**
+
+Use the Task tool to spawn the changelog-agent:
+- subagent_type: `dx-tools:changelog-agent`
+- prompt: "Analyze commits since the last release and update the CHANGELOG.md [Unreleased] section"
+- The agent will analyze commits, suggest entries, and update CHANGELOG.md after user approval
+- Wait for the agent to complete before proceeding
+
+**If user selects "No":**
+
+Continue to Step 6 (Calculate Version) without running the changelog-agent.
+
+---
+
+### Step 6: Calculate Version
+
+#### 6.1 Read CHANGELOG.md
 
 Read `CHANGELOG.md` and parse its structure. Look for:
 - The `## [Unreleased]` section and its subsections
 - The most recent versioned section (e.g., `## [0.1.0]`) to get the current version
 
-#### 5.2 Analyze Change Types
+#### 6.2 Analyze Change Types
 
 Count entries under `[Unreleased]` by subsection:
 - `### Added` - New features
@@ -103,7 +133,7 @@ Count entries under `[Unreleased]` by subsection:
 - `### Fixed` - Bug fixes
 - `### Security` - Security fixes
 
-#### 5.3 Calculate Suggested Version
+#### 6.3 Calculate Suggested Version
 
 Apply semantic versioning rules to the current version (MAJOR.MINOR.PATCH):
 
@@ -114,13 +144,13 @@ Apply semantic versioning rules to the current version (MAJOR.MINOR.PATCH):
 | `### Added` or `### Changed` present | MINOR | 0.1.0 → 0.2.0 |
 | Only `### Fixed`, `### Security`, or `### Deprecated` | PATCH | 0.1.0 → 0.1.1 |
 
-#### 5.4 Handle Edge Cases
+#### 6.4 Handle Edge Cases
 
 - **No unreleased changes**: Warn user "No entries found under [Unreleased]. Are you sure you want to release?"
 - **Missing CHANGELOG.md**: Stop and report "CHANGELOG.md not found. Please create one following Keep a Changelog format."
 - **Version override provided**: Use `$ARGUMENTS` as the version instead of calculating
 
-#### 5.5 User Confirmation
+#### 6.5 User Confirmation
 
 Use AskUserQuestion to confirm the version:
 
@@ -139,9 +169,9 @@ Options:
 
 ---
 
-### Step 6: Update CHANGELOG.md
+### Step 7: Update CHANGELOG.md
 
-#### 6.1 Get Repository URL
+#### 7.1 Get Repository URL
 
 Read `pyproject.toml` and extract the repository URL from `[project.urls]`:
 - Check keys: `Repository`, `repository`, `Source`, `source`, `Homepage`, `homepage`
@@ -149,7 +179,7 @@ Read `pyproject.toml` and extract the repository URL from `[project.urls]`:
 
 If no repository URL found, warn but continue (comparison links will be omitted).
 
-#### 6.2 Update Changelog Content
+#### 7.2 Update Changelog Content
 
 Transform the changelog:
 
@@ -188,13 +218,13 @@ Transform the changelog:
 [0.1.0]: https://github.com/user/repo/releases/tag/v0.1.0
 ```
 
-#### 6.3 Write Updated CHANGELOG.md
+#### 7.3 Write Updated CHANGELOG.md
 
 Use the Edit tool to update CHANGELOG.md with the transformed content.
 
 ---
 
-### Step 7: Commit Changelog
+### Step 8: Commit Changelog
 
 Stage and commit the changelog update:
 
@@ -214,7 +244,7 @@ Report: "Changelog committed and pushed"
 
 ---
 
-### Step 8: Create and Push Tag
+### Step 9: Create and Push Tag
 
 Create an annotated tag and push it:
 
@@ -245,7 +275,7 @@ Next steps:
 
 ## Error Recovery
 
-If any step fails after Step 5 (version confirmation):
+If any step fails after Step 6 (version confirmation):
 - Report which step failed and the error
 - Provide commands to manually complete or rollback:
   - `git checkout CHANGELOG.md` - Revert changelog changes
