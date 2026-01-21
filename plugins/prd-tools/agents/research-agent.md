@@ -34,7 +34,7 @@ when_to_use: |
   <commentary>Problem domain exploration</commentary>
   </example>
 color: green
-model: sonnet
+model: inherit
 tools:
   - WebSearch
   - WebFetch

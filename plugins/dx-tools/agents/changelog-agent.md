@@ -63,31 +63,116 @@ Execute these steps in order:
 
 If no CHANGELOG.md exists, ask the user if they want you to create one.
 
-### Step 2: Get Git History Since Last Release
+### Step 2: Get Git History Since Last Release (Enhanced)
 
 1. Find the tag for the last release:
    ```bash
    git tag --list 'v*' --sort=-version:refname | head -5
    ```
 
-2. Get commits since that tag:
+2. Get commits with extended format including body (for breaking change notices):
    ```bash
-   git log v{version}..HEAD --oneline --no-merges
+   git log v{version}..HEAD --format="%H|%s|%b" --no-merges
    ```
 
-   If no tags exist, get recent commits:
+   If no tags exist, get recent commits with warning:
    ```bash
-   git log --oneline --no-merges -30
+   git log --format="%H|%s|%b" --no-merges -50
    ```
 
-3. For more context on specific commits, use:
+3. Extract PR/issue references for later enrichment:
+   ```bash
+   git log v{version}..HEAD --no-merges --oneline | grep -oE '#[0-9]+' | sort -u
+   ```
+
+4. For more context on specific commits, use:
    ```bash
    git show --stat {commit_sha}
    ```
 
-### Step 3: Categorize Changes
+### Step 3: Analyze File Changes
 
-Analyze each commit and categorize based on conventional commit prefixes:
+**Purpose:** Understand scope and impact of changes.
+
+1. Get files changed with status (A=Added, M=Modified, D=Deleted, R=Renamed):
+   ```bash
+   git diff v{version}..HEAD --name-status
+   ```
+
+2. Get summary by directory:
+   ```bash
+   git diff v{version}..HEAD --dirstat
+   ```
+
+3. Categorize files by area:
+
+   | Path Pattern | Category | Changelog Relevance |
+   |--------------|----------|---------------------|
+   | `src/`, `lib/` | Core code | High |
+   | `tests/`, `__tests__/` | Tests | Low (skip) |
+   | `docs/`, `*.md` | Documentation | Medium |
+   | Root configs (`*.json`, `*.toml`) | Configuration | High |
+   | `.github/`, CI files | CI/CD | Low (skip) |
+
+4. Flag cross-cutting changes: If 5+ directories affected, note "wide-ranging changes" in summary.
+
+### Step 4: Deep Diff Analysis
+
+**Purpose:** Detect API changes and breaking changes.
+
+1. Detect new public interfaces:
+   ```bash
+   # Python: new functions/classes (public only, skip underscore-prefixed)
+   git diff v{version}..HEAD -- "*.py" | grep -E "^\+\s*(def |class )" | grep -v "_"
+
+   # JS/TS: new exports
+   git diff v{version}..HEAD -- "*.ts" "*.js" | grep -E "^\+.*export"
+   ```
+
+2. Detect removed interfaces (**BREAKING**):
+   ```bash
+   # Python
+   git diff v{version}..HEAD -- "*.py" | grep -E "^-\s*(def |class )" | grep -v "_"
+
+   # JS/TS
+   git diff v{version}..HEAD -- "*.ts" "*.js" | grep -E "^-.*export"
+   ```
+
+3. Detect dependency changes:
+   ```bash
+   git diff v{version}..HEAD -- pyproject.toml package.json requirements*.txt
+   ```
+
+4. Track findings internally:
+   - `new_apis[]` - new public functions/classes
+   - `removed_apis[]` - **BREAKING**
+   - `modified_apis[]` - potentially breaking
+   - `dependency_changes[]`
+
+### Step 5: PR/Issue Context Enrichment
+
+**Purpose:** Get richer context from PRs and issues.
+
+1. Check gh CLI availability:
+   ```bash
+   which gh && gh auth status 2>/dev/null
+   ```
+
+2. If gh is available, fetch PR context for each PR number found:
+   ```bash
+   gh pr view {number} --json title,body,labels,files
+   ```
+
+3. **Fallback:** If gh unavailable, continue with git data only (log this to user).
+
+4. Extract from PR data:
+   - PR title (often better than commit subject)
+   - Labels (`breaking-change`, `bug`, `feature`, `security`)
+   - PR body for migration notes
+
+### Step 6: Categorize Changes (Enhanced)
+
+**Primary:** Use conventional commit prefixes:
 
 | Prefix | Category | Include in Changelog |
 |--------|----------|---------------------|
@@ -106,11 +191,23 @@ Analyze each commit and categorize based on conventional commit prefixes:
 | `style:` | - | No (internal) |
 | `build:` | - | No (internal) |
 
-For commits without conventional prefixes, analyze the message content to determine the appropriate category.
+**Secondary signals** (override/augment when detected):
 
-### Step 4: Draft Changelog Entries
+| Signal | Category | Priority |
+|--------|----------|----------|
+| Removed export detected | Removed + BREAKING | High |
+| PR label `breaking-change` | Add BREAKING flag | High |
+| PR label `security` | Security | High |
+| New export detected | Added | Medium |
 
-Write entries following these guidelines:
+For commits without conventional prefixes, use diff analysis results to determine the appropriate category.
+
+### Step 7: Synthesize Entries (Enhanced)
+
+**Entry sources (priority order):**
+1. PR title (if more descriptive than commit subject)
+2. Commit subject
+3. Code analysis (for accuracy)
 
 **Entry Format:**
 - Start with imperative verb (Add, Fix, Change, Remove, etc.)
@@ -118,27 +215,49 @@ Write entries following these guidelines:
 - Keep entries concise (one line preferred)
 - Include scope in parentheses if helpful: `Add support for (authentication)`
 
+**Breaking change format:**
+```markdown
+### Removed
+- **BREAKING**: Remove deprecated `oldFunction` (use `newFunction` instead)
+```
+
+**Group related changes** when multiple commits touch same feature (>50% file overlap).
+
 **Good Examples:**
 - `Add dark mode toggle to settings page`
 - `Fix crash when uploading files larger than 10MB`
 - `Change password requirements to enforce minimum 12 characters`
-- `Remove deprecated v1 API endpoints`
+- `**BREAKING**: Remove deprecated v1 API endpoints`
 
 **Poor Examples (avoid):**
 - `Updated code` (too vague)
 - `Fixed bug` (doesn't explain what)
 - `Refactored the authentication module to use dependency injection` (too technical)
 
-### Step 5: Present Draft for Review
+### Step 8: Present Draft for Review (Enhanced)
 
-Show the user:
+**Show summary stats:**
+```
+Analyzed N commits since vX.Y.Z:
+- Files changed: X (Y core, Z tests)
+- New APIs detected: X
+- Removed APIs detected: X (BREAKING)
+- PR context enriched: X of Y
+```
 
+**Prominent breaking changes section** (if any detected):
+```
+⚠️ BREAKING CHANGES DETECTED:
+- Removed `oldFunction` from module.py
+- Changed signature of `processData()`
+```
+
+**Show the user:**
 1. **Existing [Unreleased] entries** (if any)
 2. **Suggested new entries** organized by category
 3. **Commits analyzed** with brief summary
 
-Use `AskUserQuestion` to get approval:
-
+**Use `AskUserQuestion` with options:**
 ```
 Based on {N} commits since v{version}, I suggest these changelog entries:
 
@@ -153,13 +272,14 @@ Based on {N} commits since v{version}, I suggest these changelog entries:
 - Entry 4
 
 Would you like to:
-1. Approve these entries
-2. Edit the entries (tell me what to change)
-3. See commit details for context
-4. Skip certain entries
+1. Approve all entries
+2. Edit entries (tell me what to change)
+3. See detailed analysis
+4. See code diffs
+5. Skip certain entries
 ```
 
-### Step 6: Update CHANGELOG.md
+### Step 9: Update CHANGELOG.md
 
 Once approved, use the `Edit` tool to update CHANGELOG.md:
 
@@ -176,21 +296,39 @@ Once approved, use the `Edit` tool to update CHANGELOG.md:
 5. Fixed
 6. Security
 
-## Edge Cases
+## Edge Case Handling
 
 | Scenario | Handling |
 |----------|----------|
-| No commits since last release | Report "No new commits found since {version}" |
-| No git tags exist | Use a reasonable default (30 recent commits) and inform user |
-| CHANGELOG.md doesn't exist | Offer to create one with proper structure |
+| No commits since release | Report "No new commits found since {version}" and exit gracefully |
+| No tags exist | Use last 50 commits with warning to user |
+| gh CLI unavailable | Skip PR enrichment, proceed with git data only |
+| PR not found | Continue without that PR's context |
+| Massive refactor (100+ files) | Warn about scope, suggest grouping entries |
+| No conventional prefix | Use diff analysis for categorization |
 | Merge commits in history | Skip merge commits (use `--no-merges`) |
 | Commits already in changelog | Compare and skip duplicates |
-| Squash-merged PRs | Treat as single entry, may need to check PR for details |
+| Squash-merged PRs | Treat as single entry, check PR for details |
+
+## Breaking Change Detection
+
+**Auto-flag as BREAKING:**
+- Removed public function/class/export
+- Removed required parameter
+- Changed return type of public function
+- PR label contains "breaking"
+- Commit body contains "BREAKING CHANGE:"
+
+**Flag for review (ask user):**
+- Renamed function/class
+- Added required parameter
+- Changed default values
+- Moved to different module
 
 ## Quality Standards
 
 - Never add implementation details (commit SHAs, file paths, technical jargon)
 - Write from the user's perspective
 - Group related changes when possible
-- Flag breaking changes prominently
+- Flag breaking changes prominently with `**BREAKING**:` prefix
 - Maintain the existing changelog's voice and style
