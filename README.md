@@ -23,6 +23,29 @@ Spec Driven Development document management plugin. Conducts dynamic interviews 
 - `/next-group [project-name]` - Get the next context group ready for execution
 - `/show-group <group-id>` - Display detailed information for a specific context group
 
+---
+
+### prd-generator
+
+Generate Product Requirements Documents through an interactive interview-based workflow.
+
+**Command:**
+- `/prd-generator:create` - Start the PRD creation workflow
+
+**Features:**
+- **Depth Levels**: Choose from high-level overview, detailed specifications, or full technical documentation
+- **Adaptive Interviews**: Questions adjust based on your responses and selected depth
+- **Codebase Integration**: For "new feature" PRDs, the agent can explore your existing code
+- **Pre-compilation Review**: Summary presented for confirmation before generating the final PRD
+- **Configurable Output**: Customize output path via `.claude/prd-generator.local.md`
+
+**Depth Options:**
+| Level | Description |
+|-------|-------------|
+| High-level overview | Executive summary with key features and goals (2-3 interview rounds) |
+| Detailed specifications | Standard PRD with acceptance criteria and phases (3-4 rounds) |
+| Full technical documentation | Comprehensive specs with APIs and data models (4-5 rounds) |
+
 ## Installation
 
 Add this plugin directory to your Claude Code configuration:
@@ -34,7 +57,8 @@ claude plugins add sequenzia/claude-plugins
 Or install individual plugins:
 
 ```bash
-claude plugins add sequenzia/claude-plugins/sdd-manager
+claude plugins add sequenzia/claude-plugins/plugins/sdd-manager
+claude plugins add sequenzia/claude-plugins/plugins/prd-generator
 ```
 
 ## License

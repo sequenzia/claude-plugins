@@ -1,0 +1,18 @@
+{
+  "name": "prd-generator",
+  "version": "1.0.0",
+  "description": "Generate Product Requirements Documents through an interactive interview-based workflow",
+  "author": "sequenzia",
+  "commands": {
+    "discovery": "auto",
+    "path": "commands"
+  },
+  "agents": {
+    "discovery": "auto",
+    "path": "agents"
+  },
+  "skills": {
+    "discovery": "auto",
+    "path": "skills"
+  }
+}

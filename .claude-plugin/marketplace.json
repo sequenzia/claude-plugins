@@ -17,6 +17,18 @@
       "source": "./plugins/sdd-manager",
       "category": "development",
       "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/sdd-manager"
+    },
+    {
+      "name": "prd-generator",
+      "description": "Generate Product Requirements Documents through an interactive interview-based workflow with depth-aware templates",
+      "version": "1.0.0",
+      "author": {
+        "name": "Stephen Sequenzia",
+        "email": "sequenzia@gmail.com"
+      },
+      "source": "./plugins/prd-generator",
+      "category": "development",
+      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/prd-generator"
     }
   ]
 }
