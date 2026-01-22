@@ -1,6 +1,6 @@
 # Claude Code Plugins Directory
 
-A collection of Claude Code plugins for development tools, productivity, and MCP integrations.
+A collection of Claude Code plugins for development tools, productivity, and workflow automation.
 
 ## Plugins
 
@@ -8,7 +8,7 @@ A collection of Claude Code plugins for development tools, productivity, and MCP
 
 Generate Product Requirements Documents through an interactive interview-based workflow.
 
-**Command:**
+**Commands:**
 - `/prd-tools:create` - Start the PRD creation workflow
 
 **Features:**
@@ -30,19 +30,25 @@ Generate Product Requirements Documents through an interactive interview-based w
 
 ### dx-tools
 
-Developer tools for Python package management and release workflows.
+Developer tools for Git workflows, Python package management, and release automation.
 
-**Command:**
-- `/dx-tools:release [version]` - Prepare and execute a Python package release
+**Commands:**
 
-**Features:**
-- **Pre-flight Checks**: Verifies clean main branch before proceeding
-- **Automated Verification**: Runs tests, linting, and build verification
-- **Semantic Versioning**: Calculates version bump from changelog entries
-- **Changelog Management**: Updates CHANGELOG.md following Keep a Changelog format
-- **Git Integration**: Commits changelog and creates annotated tags
+| Command | Description |
+|---------|-------------|
+| `/dx-tools:release [version]` | Prepare and execute a Python package release |
+| `/dx-tools:git-commit` | Stage all changes and commit with conventional commit message |
+| `/dx-tools:git-push` | Push commits to remote with automatic rebase on conflict |
+| `/dx-tools:bump-plugin-version` | Bump the version of any plugin in this repository |
 
-**Workflow Steps:**
+**Skills:**
+- **git-workflow** - Routes git operations based on user intent ("commit changes", "push to remote", "ship it")
+- **changelog-format** - Keep a Changelog format guidelines and best practices
+
+**Agents:**
+- **changelog-agent** - Analyzes git history and updates CHANGELOG.md with categorized entries
+
+**Release Workflow:**
 | Step | Action |
 |------|--------|
 | 1 | Pre-flight checks (main branch, clean directory) |
@@ -58,22 +64,22 @@ Developer tools for Python package management and release workflows.
 
 ### task-manager
 
-Spec Driven Development document management plugin. Conducts dynamic interviews to generate PRDs, Tech Specs, and Design Specs optimized for AI coding agents.
+Spec Driven Development plugin for transforming specifications into structured, actionable task lists optimized for AI coding agents.
 
 **Task Management Commands:**
-- `/analyze <spec-document>` - Analyze a specification and generate a structured task list
-- `/status [project-name]` - Show task list summary and completion metrics
-- `/next [count] [project-name]` - Suggest the next best tasks to work on
-- `/complete <task-id>` - Mark a task as complete and show next recommended tasks
-- `/block <task-id> --reason "..."` - Mark a task as blocked with a reason
-- `/show <task-id>` - Display detailed information for a specific task
-- `/update <spec-document>` - Re-analyze specification and update existing task list
-- `/export [format] [project-name]` - Export task list (json, markdown, csv)
+- `/task-manager:analyze <spec-document>` - Analyze a specification and generate a structured task list
+- `/task-manager:status [project-name]` - Show task list summary and completion metrics
+- `/task-manager:next [count] [project-name]` - Suggest the next best tasks to work on
+- `/task-manager:complete <task-id>` - Mark a task as complete and show next recommended tasks
+- `/task-manager:block <task-id> --reason "..."` - Mark a task as blocked with a reason
+- `/task-manager:show <task-id>` - Display detailed information for a specific task
+- `/task-manager:update <spec-document>` - Re-analyze specification and update existing task list
+- `/task-manager:export [format] [project-name]` - Export task list (json, markdown, csv)
 
 **Context Window Management Commands:**
-- `/context-groups [project-name]` - Generate context window-aware task groups for AI coding agents
-- `/next-group [project-name]` - Get the next context group ready for execution
-- `/show-group <group-id>` - Display detailed information for a specific context group
+- `/task-manager:context-groups [project-name]` - Generate context window-aware task groups for AI coding agents
+- `/task-manager:next-group [project-name]` - Get the next context group ready for execution
+- `/task-manager:show-group <group-id>` - Display detailed information for a specific context group
 
 ## Installation
 

@@ -33,7 +33,7 @@
     {
       "name": "dx-tools",
       "description": "Developer tools for Python package management and release workflows",
-      "version": "0.1.2",
+      "version": "0.1.4",
       "author": {
         "name": "Stephen Sequenzia",
         "email": "sequenzia@gmail.com"

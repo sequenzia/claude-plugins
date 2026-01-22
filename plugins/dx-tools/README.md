@@ -104,6 +104,70 @@ git tag -d v{version}               # Delete local tag
 git push origin :refs/tags/v{version}  # Delete remote tag
 ```
 
+### `/dx-tools:git-commit` - Git Commit
+
+Commit changes with a conventional commit message. Automatically stages all changes and analyzes the diff to generate an appropriate commit message.
+
+#### Usage
+
+```bash
+/dx-tools:git-commit
+```
+
+#### What It Does
+
+1. **Check State** - Verify there are changes to commit
+2. **Stage Changes** - Run `git add .` to stage all changes
+3. **Analyze Diff** - Examine staged changes to understand the nature of modifications
+4. **Create Commit** - Generate and apply a conventional commit message
+
+#### Conventional Commit Format
+
+```
+<type>(<scope>): <description>
+```
+
+Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `build`, `ci`, `perf`
+
+#### Pre-commit Hook Handling
+
+If a pre-commit hook fails:
+- The commit is NOT created
+- Fix the reported issues
+- Run the command again (do NOT amend the previous commit)
+
+---
+
+### `/dx-tools:git-push` - Git Push
+
+Push local commits to the remote repository with automatic conflict handling.
+
+#### Usage
+
+```bash
+/dx-tools:git-push
+```
+
+#### What It Does
+
+1. **Check State** - Compare local HEAD vs remote tracking branch
+2. **Push** - Push commits to the remote branch
+3. **Handle Conflicts** - If push fails, automatically pull with rebase and retry
+
+#### Push Failure Handling
+
+If push is rejected due to upstream changes:
+- Automatically attempts `git pull --rebase`
+- Retries push on success
+- If rebase conflicts occur, provides manual resolution instructions
+
+#### Typical Workflow
+
+```bash
+/dx-tools:git-commit    # Stage and commit with conventional message
+/dx-tools:git-push      # Push to remote
+```
+
 ## Agents
 
 ### Changelog Agent
