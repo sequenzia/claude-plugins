@@ -57,7 +57,7 @@
     {
       "name": "feature-ops",
       "description": "Feature development workflow with exploration, architecture design, implementation, and review phases",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": {
         "name": "Stephen Sequenzia",
         "email": "sequenzia@gmail.com"
