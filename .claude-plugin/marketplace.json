@@ -41,6 +41,18 @@
       "source": "./plugins/dx-tools",
       "category": "development",
       "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/dx-tools"
+    },
+    {
+      "name": "mission-control",
+      "description": "Creates and manages coding tasks for AI agents - analyze specs, track tasks, manage dependencies based on PRDs",
+      "version": "0.1.2",
+      "author": {
+        "name": "Stephen Sequenzia",
+        "email": "sequenzia@gmail.com"
+      },
+      "source": "./plugins/mission-control",
+      "category": "development",
+      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/mission-control"
     }
   ]
 }
