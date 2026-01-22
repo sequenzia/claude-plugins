@@ -1,6 +1,6 @@
 # dev-tools
 
-Developer tools for Python package management and release workflows.
+Developer tools for feature development, Git workflows, and release automation.
 
 ## Installation
 
@@ -168,7 +168,87 @@ If push is rejected due to upstream changes:
 /dev-tools:git-push      # Push to remote
 ```
 
+---
+
+### `/dev-tools:feature-dev` - Feature Development Workflow
+
+A comprehensive 7-phase workflow for developing features with specialized agents for codebase exploration, architecture design, and quality review.
+
+#### Usage
+
+```bash
+/dev-tools:feature-dev <description>    # Run feature development workflow
+```
+
+#### Workflow Phases
+
+1. **Discovery** - Understand the feature requirements
+2. **Codebase Exploration** - Map relevant code areas using parallel explorer agents
+3. **Clarifying Questions** - Resolve ambiguities before designing
+4. **Architecture Design** - Design implementation with multiple architectural approaches
+5. **Implementation** - Build the feature with explicit approval
+6. **Quality Review** - Review code with specialized reviewer agents
+7. **Summary** - Document accomplishments and generate changelog
+
+#### Agents Used
+
+| Agent | Model | Purpose |
+|-------|-------|---------|
+| code-explorer | Sonnet | Explores entry points, data models, and utilities |
+| code-architect | Opus | Designs implementation blueprints with trade-off analysis |
+| code-reviewer | Opus | Reviews for correctness, security, and maintainability |
+
+#### Skills Loaded
+
+- **Phase 2:** `project-conventions`, `language-patterns`
+- **Phase 4:** `architecture-patterns`, `language-patterns`
+- **Phase 6:** `code-quality`
+
+#### Artifacts Generated
+
+- **ADR:** Architecture Decision Record saved to `docs/adr/NNNN-feature-slug.md`
+- **Changelog:** Feature changelog entry saved to `docs/changelog/YYYY-MM-DD-feature-slug.md`
+
+#### Example
+
+```bash
+/dev-tools:feature-dev Add user profile editing with avatar upload
+```
+
+This will:
+1. Explore your codebase for profile-related code
+2. Ask clarifying questions about requirements
+3. Design 2-3 architectural approaches
+4. Let you choose an approach
+5. Implement the feature
+6. Review the implementation
+7. Generate documentation
+
 ## Agents
+
+### Code Explorer Agent
+
+Explores codebases to find relevant files, trace execution paths, and map architecture for feature development.
+
+- **Model:** Sonnet
+- **Focus areas:** Entry points, data models, utilities, shared infrastructure
+- **Output:** Structured exploration report with key files, patterns, and integration points
+
+### Code Architect Agent
+
+Designs implementation blueprints for features using exploration findings and architectural best practices.
+
+- **Model:** Opus
+- **Approaches:** Minimal/simple, flexible/extensible, project-aligned
+- **Output:** Detailed implementation blueprint with files, data flow, risks, and testing strategy
+
+### Code Reviewer Agent
+
+Reviews code implementations for correctness, security, and maintainability with confidence-scored findings.
+
+- **Model:** Opus
+- **Focus areas:** Correctness, security, error handling, maintainability
+- **Output:** Review report with issues (confidence >= 80) and suggestions
 
 ### Changelog Agent
 

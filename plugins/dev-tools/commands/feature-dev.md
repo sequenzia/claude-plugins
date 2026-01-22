@@ -14,22 +14,11 @@ arguments:
   - name: feature-description
     description: Description of the feature to implement
     required: true
-  - name: --quick
-    description: Run in quick mode (single agent per phase, faster execution)
-    required: false
 ---
 
-# Feature-Ops: Feature Development Workflow
+# Feature Development Workflow
 
 You are executing a structured 7-phase feature development workflow. This workflow guides you through understanding, exploring, designing, implementing, and reviewing a feature.
-
-## Mode Detection
-
-Check if `--quick` flag is present in the arguments:
-- **Thorough mode (default):** Launch 2-3 parallel agents at exploration, architecture, and review phases
-- **Quick mode (`--quick`):** Launch 1 agent per phase for faster execution
-
-Parse the feature description from the arguments, excluding the `--quick` flag if present.
 
 ## Phase Overview
 
@@ -81,24 +70,19 @@ Execute these phases in order:
 1. Mark Phase 2 as `in_progress`
 
 2. **Load skills for this phase:**
-   - Read `${CLAUDE_PLUGIN_ROOT}/skills/project-conventions.md` and apply its guidance
-   - Read `${CLAUDE_PLUGIN_ROOT}/skills/language-patterns.md` and apply its guidance
+   - Read `${CLAUDE_PLUGIN_ROOT}/skills/project-conventions/SKILL.md` and apply its guidance
+   - Read `${CLAUDE_PLUGIN_ROOT}/skills/language-patterns/SKILL.md` and apply its guidance
 
 3. **Launch code-explorer agents:**
 
-   **Thorough mode:** Launch 2-3 code-explorer agents in parallel with different focus areas:
+   Launch 2-3 code-explorer agents in parallel with different focus areas:
    ```
    Agent 1: Explore entry points and user-facing code related to the feature
    Agent 2: Explore data models, schemas, and storage related to the feature
    Agent 3: Explore utilities, helpers, and shared infrastructure (if applicable)
    ```
 
-   **Quick mode:** Launch 1 code-explorer agent:
-   ```
-   Agent 1: Explore the codebase to find all areas relevant to implementing the feature
-   ```
-
-   Use the Task tool with `subagent_type: "feature-ops:code-explorer"`:
+   Use the Task tool with `subagent_type: "dev-tools:code-explorer"`:
    ```
    Feature: [feature description]
    Focus area: [specific focus for this agent]
@@ -158,24 +142,19 @@ Execute these phases in order:
 1. Mark Phase 4 as `in_progress`
 
 2. **Load skills for this phase:**
-   - Read `${CLAUDE_PLUGIN_ROOT}/skills/architecture-patterns.md` and apply its guidance
-   - Read `${CLAUDE_PLUGIN_ROOT}/skills/language-patterns.md` and apply its guidance
+   - Read `${CLAUDE_PLUGIN_ROOT}/skills/architecture-patterns/SKILL.md` and apply its guidance
+   - Read `${CLAUDE_PLUGIN_ROOT}/skills/language-patterns/SKILL.md` and apply its guidance
 
 3. **Launch code-architect agents:**
 
-   **Thorough mode:** Launch 2-3 code-architect agents (Opus) with different approaches:
+   Launch 2-3 code-architect agents (Opus) with different approaches:
    ```
    Agent 1: Design a minimal, focused approach prioritizing simplicity
    Agent 2: Design a flexible, extensible approach prioritizing future changes
    Agent 3: Design an approach optimized for the project's existing patterns (if applicable)
    ```
 
-   **Quick mode:** Launch 1 code-architect agent (Opus):
-   ```
-   Agent 1: Design the best implementation approach balancing simplicity and extensibility
-   ```
-
-   Use the Task tool with `subagent_type: "feature-ops:code-architect"`:
+   Use the Task tool with `subagent_type: "dev-tools:code-architect"`:
    ```
    Feature: [feature description]
    Design approach: [specific approach for this agent]
@@ -255,23 +234,18 @@ Execute these phases in order:
 1. Mark Phase 6 as `in_progress`
 
 2. **Load skills for this phase:**
-   - Read `${CLAUDE_PLUGIN_ROOT}/skills/code-quality.md` and apply its guidance
+   - Read `${CLAUDE_PLUGIN_ROOT}/skills/code-quality/SKILL.md` and apply its guidance
 
 3. **Launch code-reviewer agents:**
 
-   **Thorough mode:** Launch 3 code-reviewer agents (Opus) with different focuses:
+   Launch 3 code-reviewer agents (Opus) with different focuses:
    ```
    Agent 1: Review for correctness and edge cases
    Agent 2: Review for security and error handling
    Agent 3: Review for maintainability and code quality
    ```
 
-   **Quick mode:** Launch 1 code-reviewer agent (Opus):
-   ```
-   Agent 1: Comprehensive review covering correctness, security, and maintainability
-   ```
-
-   Use the Task tool with `subagent_type: "feature-ops:code-reviewer"`:
+   Use the Task tool with `subagent_type: "dev-tools:code-reviewer"`:
    ```
    Review focus: [specific focus for this agent]
 
@@ -327,7 +301,7 @@ Execute these phases in order:
    - Any known limitations or future work
 
 4. **Generate changelog entry:**
-   - Read the changelog template from `${CLAUDE_PLUGIN_ROOT}/references/changelog-template.md`
+   - Read the changelog template from `${CLAUDE_PLUGIN_ROOT}/references/feature-changelog-template.md`
    - Create a changelog entry documenting:
      - Feature name and description
      - Key changes made

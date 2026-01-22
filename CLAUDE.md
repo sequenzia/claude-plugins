@@ -19,9 +19,8 @@ claude-plugins/
 ├── plugins/
 │   ├── prd-tools/                    # PRD generation
 │   ├── task-manager/                 # Spec-driven task decomposition
-│   ├── dev-tools/                    # Git workflows and releases
-│   ├── mission-control/              # Simplified task management
-│   └── feature-ops/                  # Feature development workflow
+│   ├── dev-tools/                    # Feature development, Git workflows, and releases
+│   └── mission-control/              # Simplified task management
 ├── CLAUDE.md                         # This file
 ├── README.md                         # User documentation
 └── LICENSE                           # MIT License
@@ -95,25 +94,44 @@ Spec Driven Development plugin that transforms specifications into structured, a
 
 ### dev-tools
 **Location:** `plugins/dev-tools/`
-**Version:** 0.1.4
+**Version:** 0.2.0
 
-Developer tools for Git workflows, Python package management, and release automation.
+Developer tools for feature development, Git workflows, Python package management, and release automation.
 
 **Commands:**
+- `/dev-tools:feature-dev <description>` - Feature development workflow (7 phases)
 - `/dev-tools:release [version]` - Python package release workflow
 - `/dev-tools:git-commit` - Stage and commit with conventional commit message
 - `/dev-tools:git-push` - Push to remote with automatic rebase on conflict
 - `/dev-tools:bump-plugin-version` - Bump plugin version in this repository
 
 **Agents:**
+- `code-explorer` - Explores codebases to find relevant files and map architecture (Sonnet)
+- `code-architect` - Designs implementation blueprints with trade-off analysis (Opus)
+- `code-reviewer` - Reviews for correctness, security, maintainability with confidence scores (Opus)
 - `changelog-agent` - Analyzes git history and updates CHANGELOG.md
 
 **Skills:**
+- `architecture-patterns` - MVC, event-driven, microservices, CQRS patterns
+- `code-quality` - SOLID principles, DRY, testing strategies
+- `language-patterns` - TypeScript, Python, React patterns
+- `project-conventions` - Discovering project-specific conventions
 - `git-workflow` - Routes git operations based on intent ("commit", "push", "ship it")
 - `changelog-format` - Keep a Changelog format guidelines
 
 **Key Files:**
+- `references/adr-template.md` - Architecture Decision Record template
+- `references/feature-changelog-template.md` - Feature changelog entry template
 - `references/entry-examples.md` - Changelog entry examples
+
+**Feature Development Workflow (7 phases):**
+1. Discovery - Understand requirements
+2. Codebase Exploration - Map relevant code (loads: project-conventions, language-patterns)
+3. Clarifying Questions - Resolve ambiguities
+4. Architecture Design - Design approach (loads: architecture-patterns, language-patterns)
+5. Implementation - Build with explicit approval
+6. Quality Review - Review code (loads: code-quality)
+7. Summary - Document accomplishments
 
 **Release Pipeline (9 steps):**
 1. Pre-flight checks (main branch, clean directory)
@@ -148,50 +166,6 @@ Simplified task management with mission-based organization.
 - `simple-task-management` - Mission-centric task decomposition
 
 **Storage:** Tasks stored in `missions/<mission-slug>/<project-name>.tasks.json`
-
----
-
-### feature-ops
-**Location:** `plugins/feature-ops/`
-**Version:** 0.1.0
-
-Comprehensive feature development workflow with specialized agents for codebase exploration, architecture design, and quality review.
-
-**Commands:**
-- `/feature-ops <description>` - Run feature development workflow (thorough mode)
-- `/feature-ops --quick <description>` - Run feature development workflow (quick mode)
-
-**Agents:**
-- `code-explorer` - Traces execution paths, maps architecture (Sonnet)
-- `code-architect` - Designs implementation blueprints (Opus)
-- `code-reviewer` - Reviews with confidence-based filtering ≥80 (Opus)
-
-**Skills:**
-- `architecture-patterns` - MVC, event-driven, microservices, CQRS patterns
-- `code-quality` - SOLID principles, DRY, testing strategies
-- `language-patterns` - TypeScript, Python, React patterns
-- `project-conventions` - Discovering project-specific conventions
-
-**Key Files:**
-- `references/adr-template.md` - Architecture Decision Record template
-- `references/changelog-template.md` - Changelog entry template
-
-**Workflow Phases:**
-1. Discovery - Understand requirements
-2. Codebase Exploration - Map relevant code (loads: project-conventions, language-patterns)
-3. Clarifying Questions - Resolve ambiguities
-4. Architecture Design - Design approach (loads: architecture-patterns, language-patterns)
-5. Implementation - Build with explicit approval
-6. Quality Review - Review code (loads: code-quality)
-7. Summary - Document accomplishments
-
-**Modes:**
-- Thorough (default): 2-3 parallel agents at phases 2, 4, 6
-- Quick (`--quick`): 1 agent per phase
-
-**Artifacts:**
-- ADR saved to `docs/adr/NNNN-feature-slug.md`
-- Changelog entry saved to `docs/changelog/YYYY-MM-DD-feature-slug.md`
 
 ---
 
@@ -325,7 +299,7 @@ The plugins are designed for a natural development workflow:
    ↓
 2. Task Generation (task-manager or mission-control)
    ↓
-3. Feature Development (feature-ops: explore, design, implement, review)
+3. Feature Development (dev-tools:feature-dev: explore, design, implement, review)
    ↓
 4. Git Operations (dev-tools: commit, push)
    ↓
@@ -341,8 +315,7 @@ The plugins are designed for a natural development workflow:
 | See task status | `/task-manager:status` |
 | Get next task | `/task-manager:next` |
 | Complete a task | `/task-manager:complete <id>` |
-| Develop a feature (thorough) | `/feature-ops <description>` |
-| Develop a feature (quick) | `/feature-ops --quick <description>` |
+| Develop a feature | `/dev-tools:feature-dev <description>` |
 | Commit changes | `/dev-tools:git-commit` |
 | Push to remote | `/dev-tools:git-push` |
 | Release package | `/dev-tools:release` |

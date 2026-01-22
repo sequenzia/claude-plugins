@@ -1,7 +1,7 @@
 {
   "name": "dev-tools",
-  "version": "0.1.4",
-  "description": "Developer tools for Python package management and release workflows",
+  "version": "0.2.0",
+  "description": "Developer tools for feature development, Git workflows, and release automation",
   "author": {
     "name": "Stephen Sequenzia",
     "email": "sequenzia@gmail.com"
