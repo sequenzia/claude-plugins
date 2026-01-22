@@ -114,5 +114,5 @@ git log @{u}..HEAD --oneline 2>/dev/null || git log -1 --oneline
 ## Notes
 
 - This command only pushes existing commits; it does not stage or commit
-- Use `/dx-tools:git-commit` first to create commits
+- Use `/dev-tools:git-commit` first to create commits
 - Push failures due to upstream changes trigger an automatic rebase retry

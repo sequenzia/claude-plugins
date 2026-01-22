@@ -31,16 +31,16 @@
       "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/prd-tools"
     },
     {
-      "name": "dx-tools",
+      "name": "dev-tools",
       "description": "Developer tools for Python package management and release workflows",
       "version": "0.1.4",
       "author": {
         "name": "Stephen Sequenzia",
         "email": "sequenzia@gmail.com"
       },
-      "source": "./plugins/dx-tools",
+      "source": "./plugins/dev-tools",
       "category": "development",
-      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/dx-tools"
+      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/dev-tools"
     },
     {
       "name": "mission-control",

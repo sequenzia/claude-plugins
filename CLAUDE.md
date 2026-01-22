@@ -19,7 +19,7 @@ claude-plugins/
 ├── plugins/
 │   ├── prd-tools/                    # PRD generation
 │   ├── task-manager/                 # Spec-driven task decomposition
-│   ├── dx-tools/                     # Git workflows and releases
+│   ├── dev-tools/                    # Git workflows and releases
 │   ├── mission-control/              # Simplified task management
 │   └── feature-ops/                  # Feature development workflow
 ├── CLAUDE.md                         # This file
@@ -93,17 +93,17 @@ Spec Driven Development plugin that transforms specifications into structured, a
 
 ---
 
-### dx-tools
-**Location:** `plugins/dx-tools/`
+### dev-tools
+**Location:** `plugins/dev-tools/`
 **Version:** 0.1.4
 
 Developer tools for Git workflows, Python package management, and release automation.
 
 **Commands:**
-- `/dx-tools:release [version]` - Python package release workflow
-- `/dx-tools:git-commit` - Stage and commit with conventional commit message
-- `/dx-tools:git-push` - Push to remote with automatic rebase on conflict
-- `/dx-tools:bump-plugin-version` - Bump plugin version in this repository
+- `/dev-tools:release [version]` - Python package release workflow
+- `/dev-tools:git-commit` - Stage and commit with conventional commit message
+- `/dev-tools:git-push` - Push to remote with automatic rebase on conflict
+- `/dev-tools:bump-plugin-version` - Bump plugin version in this repository
 
 **Agents:**
 - `changelog-agent` - Analyzes git history and updates CHANGELOG.md
@@ -279,7 +279,7 @@ Follow Conventional Commits format for all commit messages:
 - `test(scope): description` - Test additions/changes
 - `chore(scope): description` - Maintenance tasks
 
-Use `/dx-tools:git-commit` to auto-generate conventional commit messages.
+Use `/dev-tools:git-commit` to auto-generate conventional commit messages.
 
 ### Changelog Management
 
@@ -327,9 +327,9 @@ The plugins are designed for a natural development workflow:
    ↓
 3. Feature Development (feature-ops: explore, design, implement, review)
    ↓
-4. Git Operations (dx-tools: commit, push)
+4. Git Operations (dev-tools: commit, push)
    ↓
-5. Release (dx-tools: changelog, version, tag)
+5. Release (dev-tools: changelog, version, tag)
 ```
 
 ## Quick Reference
@@ -343,7 +343,7 @@ The plugins are designed for a natural development workflow:
 | Complete a task | `/task-manager:complete <id>` |
 | Develop a feature (thorough) | `/feature-ops <description>` |
 | Develop a feature (quick) | `/feature-ops --quick <description>` |
-| Commit changes | `/dx-tools:git-commit` |
-| Push to remote | `/dx-tools:git-push` |
-| Release package | `/dx-tools:release` |
-| Bump plugin version | `/dx-tools:bump-plugin-version` |
+| Commit changes | `/dev-tools:git-commit` |
+| Push to remote | `/dev-tools:git-push` |
+| Release package | `/dev-tools:release` |
+| Bump plugin version | `/dev-tools:bump-plugin-version` |

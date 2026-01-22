@@ -5,8 +5,5 @@
   "author": {
     "name": "Stephen Sequenzia",
     "email": "sequenzia@gmail.com"
-  },
-  "commands": "auto",
-  "agents": "auto",
-  "skills": "auto"
+  }
 }

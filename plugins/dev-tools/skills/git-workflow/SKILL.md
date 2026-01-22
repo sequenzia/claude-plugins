@@ -32,7 +32,7 @@ When the user's intent is to commit without pushing:
 
 **Trigger phrases**: commit, save changes, commit this, commit my work
 
-**Action**: Run `/dx-tools:git-commit`
+**Action**: Run `/dev-tools:git-commit`
 
 ### Push Only
 
@@ -40,7 +40,7 @@ When the user's intent is to push existing commits without creating a new commit
 
 **Trigger phrases**: push, push changes, push to remote, push it up
 
-**Action**: Run `/dx-tools:git-push`
+**Action**: Run `/dev-tools:git-push`
 
 ### Commit and Push
 
@@ -48,7 +48,7 @@ When the user wants to commit their changes AND push them to the remote:
 
 **Trigger phrases**: commit and push, ship it, send it up, save and push
 
-**Action**: Run `/dx-tools:git-commit` first, then `/dx-tools:git-push`
+**Action**: Run `/dev-tools:git-commit` first, then `/dev-tools:git-push`
 
 ## Decision Logic
 
