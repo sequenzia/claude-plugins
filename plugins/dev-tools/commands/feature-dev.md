@@ -186,8 +186,8 @@ Execute these phases in order:
      - Decision: The chosen approach
      - Consequences: Trade-offs and implications
      - Alternatives: Other approaches considered
-   - Determine the next ADR number by checking existing files in `docs/adr/`
-   - Save to `docs/adr/NNNN-[feature-slug].md` (create `docs/adr/` if needed)
+   - Determine the next ADR number by checking existing files in `internal/docs/adr/`
+   - Save to `internal/docs/adr/NNNN-[feature-slug].md` (create `internal/docs/adr/` if needed)
    - Inform the user of the saved ADR location
 
 7. Mark Phase 4 as `completed`
@@ -300,15 +300,15 @@ Execute these phases in order:
    - Architecture decisions made
    - Any known limitations or future work
 
-4. **Generate changelog entry:**
-   - Read the changelog template from `${CLAUDE_PLUGIN_ROOT}/references/feature-changelog-template.md`
-   - Create a changelog entry documenting:
-     - Feature name and description
-     - Key changes made
-     - Files modified
-   - Create `docs/changelog/` directory if needed
-   - Save to `docs/changelog/[YYYY-MM-DD]-[feature-slug].md`
-   - Inform the user of the saved location
+4. **Update CHANGELOG.md:**
+   - Read the entry template from `${CLAUDE_PLUGIN_ROOT}/references/feature-changelog-template.md`
+   - Load the `changelog-format` skill for Keep a Changelog guidelines
+   - Create an entry under the `[Unreleased]` section with:
+     - Appropriate category (Added, Changed, Fixed, etc.)
+     - Concise description of the feature
+   - If `CHANGELOG.md` doesn't exist, create it with proper header
+   - Add the entry to the appropriate section under `[Unreleased]`
+   - Inform the user of the update
 
 5. Mark Phase 7 as `completed`
 

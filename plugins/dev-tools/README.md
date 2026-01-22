@@ -206,8 +206,8 @@ A comprehensive 7-phase workflow for developing features with specialized agents
 
 #### Artifacts Generated
 
-- **ADR:** Architecture Decision Record saved to `docs/adr/NNNN-feature-slug.md`
-- **Changelog:** Feature changelog entry saved to `docs/changelog/YYYY-MM-DD-feature-slug.md`
+- **ADR:** Architecture Decision Record saved to `internal/docs/adr/NNNN-feature-slug.md`
+- **Changelog:** Entry added to `CHANGELOG.md` under `[Unreleased]` section
 
 #### Example
 

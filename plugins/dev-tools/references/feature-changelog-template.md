@@ -1,160 +1,118 @@
-# Changelog Entry Template
+# CHANGELOG.md Entry Template
 
-Use this template when generating changelog entries in Phase 7.
+Use this template when adding feature changelog entries in Phase 7.
 
 ---
 
-## Template
+## Entry Format
+
+Entries should be concise, user-focused lines under the appropriate category:
 
 ```markdown
-# Changelog: [Feature Name]
-
-**Date:** YYYY-MM-DD
-**Feature:** [Brief description of what was built]
-
-## Summary
-
-[2-3 sentence summary of what was accomplished]
-
-## Changes
-
 ### Added
-- [New capability 1]
-- [New capability 2]
+- Add [feature name] with [key capability]
 
 ### Changed
-- [Modification 1]
-- [Modification 2]
+- Update [component] to [new behavior]
 
-### Technical Details
-- [Implementation detail 1]
-- [Implementation detail 2]
-
-## Files Modified
-
-### New Files
-| File | Purpose |
-|------|---------|
-| `path/to/file.ts` | Description |
-
-### Modified Files
-| File | Changes |
-|------|---------|
-| `path/to/file.ts` | What was changed |
-
-## Architecture Decisions
-
-[Reference to ADR if created]
-- ADR-NNNN: [Title]
-
-## Testing
-
-- [ ] Unit tests added/updated
-- [ ] Integration tests added/updated
-- [ ] Manual testing completed
-
-## Notes
-
-[Any additional notes, limitations, or future work]
+### Fixed
+- Fix [issue description]
 ```
 
 ---
 
 ## Usage Instructions
 
-1. **Create filename:**
-   - Format: `YYYY-MM-DD-feature-slug.md`
-   - Use today's date
-   - Use kebab-case for the slug
-   - Example: `2024-01-15-user-authentication.md`
+1. **Locate CHANGELOG.md:**
+   - Find the project's `CHANGELOG.md` in the repository root
+   - If it doesn't exist, create it using the structure below
 
-2. **Save location:**
-   - Create `docs/changelog/` directory if it doesn't exist
-   - Save the changelog entry to that directory
+2. **Find the `[Unreleased]` section:**
+   - Entries go under `## [Unreleased]`
+   - If the section doesn't exist, add it after the header
 
-3. **Fill in the template:**
-   - Focus on user-facing changes in Summary
-   - List all files touched
-   - Reference related ADRs
+3. **Choose the appropriate category:**
+   - **Added** - New features or capabilities
+   - **Changed** - Changes to existing functionality
+   - **Deprecated** - Features that will be removed
+   - **Removed** - Features that were removed
+   - **Fixed** - Bug fixes
+   - **Security** - Security improvements
+
+4. **Write concise entries:**
+   - Use imperative mood ("Add feature" not "Added feature")
+   - Focus on user-facing changes
+   - One line per distinct change
+   - Reference related ADRs if applicable
 
 ---
 
-## Example Changelog Entry
+## CHANGELOG.md Structure
+
+If creating a new CHANGELOG.md:
 
 ```markdown
-# Changelog: User Profile Editing
+# Changelog
 
-**Date:** 2024-01-15
-**Feature:** Allow users to edit their profile information
+All notable changes to this project will be documented in this file.
 
-## Summary
+The format is based on [Keep a Changelog](https://keepachangelog.com/),
+and this project adheres to [Semantic Versioning](https://semver.org/).
 
-Users can now edit their profile information including name, email, and avatar. Changes are validated in real-time and saved automatically with debouncing.
-
-## Changes
+## [Unreleased]
 
 ### Added
-- Profile edit form with real-time validation
-- Avatar upload with image cropping
-- Email change with verification flow
-- Profile update API endpoint
+- Your new feature entry here
+```
+
+---
+
+## Example Entries
+
+### Simple Feature
+```markdown
+### Added
+- Add user profile editing with avatar upload support
+```
+
+### Feature with Multiple Changes
+```markdown
+### Added
+- Add profile edit form with real-time validation
+- Add avatar upload with image cropping
 
 ### Changed
-- User model now supports avatar URLs
-- Navigation now shows user avatar
+- Update navigation to display user avatar
+```
 
-### Technical Details
-- Used react-image-crop for avatar editing
-- Implemented optimistic updates for better UX
-- Added debounced auto-save (500ms delay)
-
-## Files Modified
-
-### New Files
-| File | Purpose |
-|------|---------|
-| `src/components/ProfileEditor/ProfileEditor.tsx` | Main profile editing component |
-| `src/components/ProfileEditor/AvatarUpload.tsx` | Avatar upload and crop component |
-| `src/hooks/useProfileUpdate.ts` | Profile update logic with debouncing |
-| `src/api/profile.ts` | Profile API client functions |
-
-### Modified Files
-| File | Changes |
-|------|---------|
-| `src/models/User.ts` | Added avatarUrl field |
-| `src/components/Navigation.tsx` | Display user avatar |
-| `src/api/index.ts` | Export profile API |
-| `prisma/schema.prisma` | Added avatarUrl to User model |
-
-## Architecture Decisions
-
-- ADR-0005: Profile Image Storage with S3
-
-## Testing
-
-- [x] Unit tests added for ProfileEditor
-- [x] Unit tests added for useProfileUpdate hook
-- [x] Integration tests for profile API
-- [x] Manual testing completed
-
-## Notes
-
-- Avatar images are resized to 256x256 on upload
-- Old avatars are not automatically deleted (future cleanup task)
-- Email changes require verification before taking effect
+### Referencing ADRs
+```markdown
+### Added
+- Add JWT-based user authentication (see ADR-0003)
 ```
 
 ---
 
 ## Categories Reference
 
-Use these categories from Keep a Changelog:
+Use these categories from Keep a Changelog (in this order):
 
-- **Added** - New features
-- **Changed** - Changes to existing functionality
-- **Deprecated** - Features that will be removed
-- **Removed** - Features that were removed
-- **Fixed** - Bug fixes
-- **Security** - Security improvements
+| Category | Use For |
+|----------|---------|
+| **Added** | New features |
+| **Changed** | Changes to existing functionality |
+| **Deprecated** | Features that will be removed in future |
+| **Removed** | Features that were removed |
+| **Fixed** | Bug fixes |
+| **Security** | Security improvements |
 
-For feature changelog entries, typically only Added and Changed are relevant.
+For feature development, **Added** and **Changed** are most common.
+
+---
+
+## Tips
+
+- Keep entries concise - detailed implementation notes belong in commits or ADRs
+- Focus on what users can now do, not implementation details
+- If a feature spans multiple categories, add entries to each relevant one
+- Load the `changelog-format` skill for additional Keep a Changelog guidelines

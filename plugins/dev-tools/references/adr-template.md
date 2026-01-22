@@ -74,7 +74,7 @@ Use this template when generating Architecture Decision Records in Phase 4.
 ## Usage Instructions
 
 1. **Determine ADR number:**
-   - Check existing files in `docs/adr/`
+   - Check existing files in `internal/docs/adr/`
    - Use the next sequential number (e.g., 0001, 0002)
    - If no ADRs exist, start with 0001
 
@@ -90,7 +90,7 @@ Use this template when generating Architecture Decision Records in Phase 4.
    - Document alternatives that were considered
 
 4. **Save location:**
-   - Create `docs/adr/` directory if it doesn't exist
+   - Create `internal/docs/adr/` directory if it doesn't exist
    - Save the ADR to that directory
 
 ---
