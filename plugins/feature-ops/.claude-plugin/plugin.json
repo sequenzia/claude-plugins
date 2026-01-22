@@ -1,0 +1,12 @@
+{
+  "name": "feature-ops",
+  "version": "0.1.0",
+  "description": "Comprehensive feature development workflow with specialized agents for codebase exploration, architecture design, and quality review",
+  "author": {
+    "name": "Stephen Sequenzia",
+    "email": "sequenzia@gmail.com"
+  },
+  "commands": "auto",
+  "agents": "auto",
+  "skills": "auto"
+}

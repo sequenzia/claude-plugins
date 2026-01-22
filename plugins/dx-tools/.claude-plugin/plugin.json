@@ -3,6 +3,7 @@
   "version": "0.1.4",
   "description": "Developer tools for Python package management and release workflows",
   "author": {
-    "name": "sequenzia"
+    "name": "Stephen Sequenzia",
+    "email": "sequenzia@gmail.com"
   }
 }

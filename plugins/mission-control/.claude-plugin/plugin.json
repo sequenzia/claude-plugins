@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "description": "Simplified task management for coding agents - generate task lists from specs, track tasks, manage dependencies",
   "author": {
-    "name": "sequenzia"
+    "name": "Stephen Sequenzia",
+    "email": "sequenzia@gmail.com"
   }
 }
