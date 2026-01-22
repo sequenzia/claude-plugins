@@ -4,6 +4,8 @@ triggers:
   - commit changes
   - save changes
   - commit this
+  - commit it
+  - push it
   - push changes
   - push to remote
   - push it up
@@ -20,8 +22,8 @@ This skill routes git operations to the appropriate commands based on user inten
 
 Trigger this skill when the user wants to:
 
-- **Commit only**: "commit changes", "save changes", "commit this", "commit my work"
-- **Push only**: "push changes", "push to remote", "push it up", "push this"
+- **Commit only**: "commit changes", "save changes", "commit this", "commit it", "commit my work"
+- **Push only**: "push changes", "push to remote", "push it up", "push this", "push it"
 - **Both**: "commit and push", "ship it", "send it up", "save and push"
 
 ## Behavior
@@ -30,7 +32,7 @@ Trigger this skill when the user wants to:
 
 When the user's intent is to commit without pushing:
 
-**Trigger phrases**: commit, save changes, commit this, commit my work
+**Trigger phrases**: commit, save changes, commit this, commit it, commit my work
 
 **Action**: Run `/dev-tools:git-commit`
 
@@ -38,7 +40,7 @@ When the user's intent is to commit without pushing:
 
 When the user's intent is to push existing commits without creating a new commit:
 
-**Trigger phrases**: push, push changes, push to remote, push it up
+**Trigger phrases**: push, push changes, push to remote, push it up, push it
 
 **Action**: Run `/dev-tools:git-push`
 

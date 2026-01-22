@@ -1,5 +1,6 @@
 ---
 description: Feature development workflow with exploration, architecture, implementation, and review phases
+argument-hint: <feature-description>
 allowed-tools:
   - Read
   - Write
