@@ -21,9 +21,11 @@ arguments:
 
 You are executing a structured 7-phase feature development workflow. This workflow guides you through understanding, exploring, designing, implementing, and reviewing a feature.
 
+**CRITICAL: You MUST complete ALL 7 phases.** The workflow is not complete until Phase 7: Summary is finished. After completing each phase, immediately proceed to the next phase without waiting for user prompts.
+
 ## Phase Overview
 
-Execute these phases in order:
+Execute these phases in order, completing ALL of them:
 
 1. **Discovery** - Understand the feature requirements
 2. **Codebase Exploration** - Map relevant code areas
@@ -226,6 +228,9 @@ Execute these phases in order:
 
 7. Mark Phase 5 as `completed`
 
+8. **IMPORTANT: Proceed immediately to Phase 6.**
+   Do NOT stop here. Do NOT wait for user input. Implementation is complete, but the workflow requires Quality Review and Summary phases. Continue directly to Phase 6 now.
+
 ---
 
 ## Phase 6: Quality Review
@@ -283,6 +288,9 @@ Execute these phases in order:
 
 8. Mark Phase 6 as `completed`
 
+9. **IMPORTANT: Proceed immediately to Phase 7.**
+   Do NOT stop here. The workflow requires a Summary phase to document accomplishments and update the CHANGELOG. Continue directly to Phase 7 now.
+
 ---
 
 ## Phase 7: Summary
@@ -318,6 +326,9 @@ Execute these phases in order:
    - Commit the changes
    - Create a PR
    - Additional testing suggestions
+
+7. **Verify workflow completion:**
+   Confirm all 7 phases in TodoWrite are marked `completed`. If any phase was skipped, note it in your final summary.
 
 ---
 
