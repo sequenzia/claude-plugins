@@ -125,15 +125,7 @@ Options:
 
 **If user selects "Yes, commit":**
 
-Run these git commands:
-
-```bash
-git add plugins/{plugin_name}/.claude-plugin/plugin.json .claude-plugin/marketplace.json
-```
-
-```bash
-git commit -m "chore({plugin_name}): bump version to {new_version}"
-```
+Run `/dev-tools:git-commit`
 
 Report: "Changes committed with message: chore({plugin_name}): bump version to {new_version}"
 
