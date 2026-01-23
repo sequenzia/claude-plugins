@@ -20,7 +20,8 @@ claude-plugins/
 │   ├── prd-tools/                    # PRD generation
 │   ├── task-manager/                 # Spec-driven task decomposition
 │   ├── dev-tools/                    # Feature development, Git workflows, and releases
-│   └── mission-control/              # Simplified task management
+│   ├── mission-control/              # Simplified task management
+│   └── ralph-mission/                # Mission-driven autonomous loops
 ├── CLAUDE.md                         # This file
 ├── README.md                         # User documentation
 └── LICENSE                           # MIT License
@@ -169,6 +170,43 @@ Simplified task management with mission-based organization.
 
 ---
 
+### ralph-mission
+**Location:** `plugins/ralph-mission/`
+**Version:** 0.1.0
+
+Mission-driven autonomous loop that iterates through mission-control tasks until all are complete.
+
+**Commands:**
+- `/ralph-mission <mission-path>` - Start autonomous task loop
+- `/ralph-mission:status` - Show loop progress
+- `/ralph-mission:cancel` - Cancel active loop
+
+**Hooks:**
+- `Stop` - Core loop engine that detects task completion and selects next task
+
+**Task Selection (Priority Scoring):**
+```
+score = (priority × 100) + (blocks × 50) + complexity_bonus
+```
+- Priority: critical=4, high=3, medium=2, low=1
+- Complexity bonus: XS=+15, S=+10, M=+5, L=0, XL=-5
+
+**Completion Detection:**
+- Reads task status from tasks.json file
+- Claude updates status to "complete" when task is done
+- Hook detects the change and selects next task
+
+**Progress Tracking:**
+- Learnings logged to `progress.txt` in mission directory
+- Git commits required per task for rollback points
+
+**Safety Features:**
+- Max iterations limit (default: 50)
+- Max failed attempts per task (default: 3)
+- Dependency-aware task selection
+
+---
+
 ## Development Guidelines
 
 ### Plugin Structure
@@ -299,12 +337,16 @@ The plugins are designed for a natural development workflow:
    ↓
 2. Task Generation (task-manager or mission-control)
    ↓
-3. Feature Development (dev-tools:feature-dev: explore, design, implement, review)
+3. Task Execution (choose one):
+   a. Manual: dev-tools:feature-dev for each task
+   b. Autonomous: ralph-mission for automated iteration
    ↓
 4. Git Operations (dev-tools: commit, push)
    ↓
 5. Release (dev-tools: changelog, version, tag)
 ```
+
+**Autonomous Mode:** Use `ralph-mission` to automatically iterate through all tasks from a mission-control tasks.json file until complete.
 
 ## Quick Reference
 
@@ -320,3 +362,6 @@ The plugins are designed for a natural development workflow:
 | Push to remote | `/dev-tools:git-push` |
 | Release package | `/dev-tools:release` |
 | Bump plugin version | `/dev-tools:bump-plugin-version` |
+| Start autonomous loop | `/ralph-mission <mission-path>` |
+| Check loop progress | `/ralph-mission:status` |
+| Cancel loop | `/ralph-mission:cancel` |

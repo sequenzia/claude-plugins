@@ -53,6 +53,18 @@
       "source": "./plugins/mission-control",
       "category": "development",
       "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/mission-control"
+    },
+    {
+      "name": "ralph-mission",
+      "description": "Mission-driven autonomous loop - iterates through mission-control tasks until all are complete",
+      "version": "0.1.0",
+      "author": {
+        "name": "Stephen Sequenzia",
+        "email": "sequenzia@gmail.com"
+      },
+      "source": "./plugins/ralph-mission",
+      "category": "automation",
+      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/ralph-mission"
     }
   ]
 }
