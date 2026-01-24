@@ -31,22 +31,25 @@ claude-plugins/
 
 ### prd-tools
 **Location:** `plugins/prd-tools/`
-**Version:** 0.2.0
+**Version:** 0.3.0
 
-Generates and analyzes Product Requirements Documents through interactive workflows.
+Generates and analyzes Product Requirements Documents through interactive workflows, and transforms PRDs into Claude Code native Tasks.
 
 **Commands:**
 - `/prd-tools:create` - Start PRD creation workflow
 - `/prd-tools:analyze <path>` - Analyze existing PRD for quality issues
+- `/prd-tools:create-tasks <path>` - Generate Claude Code native Tasks from an existing PRD
 
 **Agents:**
 - `interview-agent` - Conducts adaptive requirement gathering interviews (uses opus model)
 - `research-agent` - Researches technical docs, best practices, and domain knowledge
 - `prd-analyzer` - Analyzes PRDs for quality issues with interactive resolution (uses opus model)
+- `task-generator` - Transforms PRDs into native Tasks with dependencies (uses opus model)
 
 **Skills:**
 - `prd-generation` - PRD generation knowledge, templates, and compilation guidance
 - `prd-analysis` - PRD analysis knowledge, criteria, and common issue patterns
+- `task-generation` - Task decomposition patterns, dependency inference, and metadata standards
 
 **Key Files:**
 - `skills/prd-generation/references/template-*.md` - PRD templates (high-level, detailed, full-tech)
@@ -54,6 +57,8 @@ Generates and analyzes Product Requirements Documents through interactive workfl
 - `skills/prd-analysis/references/analysis-criteria.md` - Depth-specific analysis checklists
 - `skills/prd-analysis/references/common-issues.md` - Issue pattern library
 - `skills/prd-analysis/references/report-template.md` - Analysis report format
+- `skills/task-generation/references/decomposition-patterns.md` - Feature decomposition patterns
+- `skills/task-generation/references/dependency-inference.md` - Dependency inference rules
 
 **Analysis Features:**
 - Depth-aware analysis (respects high-level/detailed/full-tech)
@@ -62,6 +67,15 @@ Generates and analyzes Product Requirements Documents through interactive workfl
 - Interactive update mode with Apply/Modify/Skip options
 - Progress tracking: `Finding X/Y (N resolved, M skipped)`
 - Report saved alongside PRD as `{name}.analysis.md`
+
+**Task Generation Features:**
+- Creates Claude Code native Tasks (TaskCreate/TaskUpdate)
+- Depth-aware granularity (1-2 tasks for high-level, 5-10 for full-tech)
+- Automatic dependency inference from layer relationships
+- Priority mapping from PRD (P0-P3 → critical/high/medium/low)
+- Complexity estimation (XS/S/M/L/XL)
+- Merge mode preserves completed tasks on re-run
+- Task metadata includes source PRD section references
 
 **Configuration:** Output path configurable via `.claude/prd-tools.local.md`
 
@@ -345,18 +359,24 @@ Update `.claude-plugin/marketplace.json` when adding/modifying plugins:
 The plugins are designed for a natural development workflow:
 
 ```
-1. PRD Creation (prd-tools)
+1. PRD Creation (prd-tools:create)
    ↓
-2. Task Generation (task-manager or mission-control)
+2. PRD Analysis (prd-tools:analyze) [optional]
    ↓
-3. Task Execution (choose one):
+3. Task Generation (choose one):
+   a. Native Tasks: prd-tools:create-tasks (Claude Code TaskCreate/TaskUpdate)
+   b. Mission Tasks: task-manager or mission-control (JSON file)
+   ↓
+4. Task Execution (choose one):
    a. Manual: dev-tools:feature-dev for each task
-   b. Autonomous: ralph-mission for automated iteration
+   b. Autonomous: ralph-mission for mission-control tasks
    ↓
-4. Git Operations (dev-tools: commit, push)
+5. Git Operations (dev-tools: commit, push)
    ↓
-5. Release (dev-tools: changelog, version, tag)
+6. Release (dev-tools: changelog, version, tag)
 ```
+
+**Native Tasks Mode:** Use `prd-tools:create-tasks` to generate Claude Code native Tasks with dependencies. View with `TaskList`, track with `TaskGet`/`TaskUpdate`.
 
 **Autonomous Mode:** Use `ralph-mission` to automatically iterate through all tasks from a mission-control tasks.json file until complete.
 
@@ -366,6 +386,7 @@ The plugins are designed for a natural development workflow:
 |------|---------|
 | Create a PRD | `/prd-tools:create` |
 | Analyze a PRD | `/prd-tools:analyze <path>` |
+| Generate native Tasks from PRD | `/prd-tools:create-tasks <path>` |
 | Analyze spec into tasks | `/task-manager:analyze <spec>` |
 | See task status | `/task-manager:status` |
 | Get next task | `/task-manager:next` |
