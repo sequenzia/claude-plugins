@@ -20,8 +20,8 @@
     },
     {
       "name": "prd-tools",
-      "description": "Generate Product Requirements Documents through an interactive interview-based workflow with depth-aware templates",
-      "version": "0.1.1",
+      "description": "Generate and analyze Product Requirements Documents through interactive workflows",
+      "version": "0.2.1",
       "author": {
         "name": "Stephen Sequenzia",
         "email": "sequenzia@gmail.com"

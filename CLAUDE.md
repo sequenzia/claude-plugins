@@ -17,7 +17,7 @@ claude-plugins/
 ├── .claude-plugin/
 │   └── marketplace.json              # Central plugin registry
 ├── plugins/
-│   ├── prd-tools/                    # PRD generation
+│   ├── prd-tools/                    # PRD generation and analysis
 │   ├── task-manager/                 # Spec-driven task decomposition
 │   ├── dev-tools/                    # Feature development, Git workflows, and releases
 │   ├── mission-control/              # Simplified task management
@@ -31,25 +31,37 @@ claude-plugins/
 
 ### prd-tools
 **Location:** `plugins/prd-tools/`
-**Version:** 0.1.1
+**Version:** 0.2.0
 
-Generates Product Requirements Documents through an interactive interview-based workflow.
+Generates and analyzes Product Requirements Documents through interactive workflows.
 
 **Commands:**
 - `/prd-tools:create` - Start PRD creation workflow
+- `/prd-tools:analyze <path>` - Analyze existing PRD for quality issues
 
 **Agents:**
 - `interview-agent` - Conducts adaptive requirement gathering interviews (uses opus model)
 - `research-agent` - Researches technical docs, best practices, and domain knowledge
+- `prd-analyzer` - Analyzes PRDs for quality issues with interactive resolution (uses opus model)
 
 **Skills:**
 - `prd-generation` - PRD generation knowledge, templates, and compilation guidance
+- `prd-analysis` - PRD analysis knowledge, criteria, and common issue patterns
 
 **Key Files:**
-- `references/template-high-level.md` - Executive summary template
-- `references/template-detailed.md` - Standard PRD template
-- `references/template-full-tech.md` - Comprehensive technical template
-- `references/interview-questions.md` - Question inspiration library
+- `skills/prd-generation/references/template-*.md` - PRD templates (high-level, detailed, full-tech)
+- `skills/prd-generation/references/interview-questions.md` - Question inspiration library
+- `skills/prd-analysis/references/analysis-criteria.md` - Depth-specific analysis checklists
+- `skills/prd-analysis/references/common-issues.md` - Issue pattern library
+- `skills/prd-analysis/references/report-template.md` - Analysis report format
+
+**Analysis Features:**
+- Depth-aware analysis (respects high-level/detailed/full-tech)
+- Four finding categories: Inconsistencies, Missing Information, Ambiguities, Structure Issues
+- Three severity levels: Critical, Warning, Suggestion
+- Interactive update mode with Apply/Modify/Skip options
+- Progress tracking: `Finding X/Y (N resolved, M skipped)`
+- Report saved alongside PRD as `{name}.analysis.md`
 
 **Configuration:** Output path configurable via `.claude/prd-tools.local.md`
 
@@ -353,6 +365,7 @@ The plugins are designed for a natural development workflow:
 | Task | Command |
 |------|---------|
 | Create a PRD | `/prd-tools:create` |
+| Analyze a PRD | `/prd-tools:analyze <path>` |
 | Analyze spec into tasks | `/task-manager:analyze <spec>` |
 | See task status | `/task-manager:status` |
 | Get next task | `/task-manager:next` |

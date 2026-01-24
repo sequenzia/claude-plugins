@@ -1,11 +1,12 @@
-# PRD Generator Plugin
+# PRD Tools Plugin
 
-A Claude Code plugin that generates Product Requirements Documents (PRDs) through an interactive interview-based workflow.
+A Claude Code plugin for generating and analyzing Product Requirements Documents (PRDs) through interactive workflows.
 
 ## Features
 
 - **Interactive Interview Process**: Gathers requirements through adaptive questioning
-- **Depth-Aware Templates**: Three detail levels to match your needs
+- **PRD Analysis**: Analyze existing PRDs for quality issues with interactive resolution
+- **Depth-Aware**: Three detail levels for both creation and analysis
 - **Codebase Integration**: Can explore existing code for "new feature" PRDs
 - **On-Demand Research**: Research technical docs, best practices, and domain knowledge during interviews
 - **AI-Optimized Output**: PRDs structured for optimal AI assistant consumption
@@ -17,7 +18,7 @@ A Claude Code plugin that generates Product Requirements Documents (PRDs) throug
 
 ## Usage
 
-### Basic Usage
+### Creating a PRD
 
 Run the create command to start generating a PRD:
 
@@ -30,6 +31,77 @@ This will:
 2. Launch an adaptive interview to gather detailed requirements
 3. Present a summary for your review
 4. Generate the PRD and save it to your configured location
+
+### Analyzing a PRD
+
+Run the analyze command to review an existing PRD for quality issues:
+
+```
+/prd-tools:analyze <path-to-prd>
+```
+
+Example:
+```
+/prd-tools:analyze specs/PRD-User-Authentication.md
+```
+
+This will:
+1. Read and analyze the PRD for issues
+2. Detect the depth level automatically
+3. Generate an analysis report with findings
+4. Offer interactive mode to resolve issues
+
+#### Finding Categories
+
+The analyzer checks for four types of issues:
+
+| Category | Description | Examples |
+|----------|-------------|----------|
+| **Inconsistencies** | Internal contradictions | Feature named differently across sections, priority mismatches |
+| **Missing Information** | Expected content absent | Undefined terms, missing acceptance criteria, unlisted dependencies |
+| **Ambiguities** | Unclear statements | Vague metrics ("fast"), open-ended lists ("etc."), undefined scope |
+| **Structure Issues** | Organization problems | Missing sections, misplaced content, inconsistent formatting |
+
+#### Severity Levels
+
+| Severity | When Assigned | Action |
+|----------|---------------|--------|
+| **Critical** | Would cause implementation to fail | Must fix |
+| **Warning** | Could cause confusion | Should fix |
+| **Suggestion** | Quality improvement | Nice to fix |
+
+#### Interactive Resolution
+
+When you choose update mode, the analyzer walks through each finding:
+
+```
+FINDING 3/12 (2 resolved, 1 skipped)
+
+Category: Missing Information
+Severity: Warning
+Location: Section 5.1 "User Stories" (line 89)
+
+CURRENT:
+"Users should search products quickly."
+
+ISSUE:
+"Quickly" is not measurable.
+
+PROPOSED:
+"Users should search products with results appearing within 500ms."
+
+[Apply] [Modify] [Skip]
+```
+
+- **Apply**: Use the proposed fix
+- **Modify**: Provide your own fix text
+- **Skip**: Don't change (optionally note why)
+
+#### Analysis Report
+
+Reports are saved alongside the PRD with `.analysis.md` suffix:
+- PRD: `specs/PRD-Feature.md`
+- Report: `specs/PRD-Feature.analysis.md`
 
 ### Depth Levels
 
@@ -170,18 +242,26 @@ prd-tools/
 ├── .claude-plugin/
 │   └── plugin.json           # Plugin manifest
 ├── commands/
-│   └── create.md             # /prd-tools:create command
+│   ├── create.md             # /prd-tools:create command
+│   └── analyze.md            # /prd-tools:analyze command
 ├── agents/
 │   ├── interview-agent.md    # Adaptive interview agent
-│   └── research-agent.md     # On-demand research agent
+│   ├── research-agent.md     # On-demand research agent
+│   └── prd-analyzer.md       # PRD quality analysis agent
 ├── skills/
-│   └── prd-generation/
-│       ├── SKILL.md          # PRD generation knowledge
+│   ├── prd-generation/
+│   │   ├── SKILL.md          # PRD generation knowledge
+│   │   └── references/
+│   │       ├── template-high-level.md
+│   │       ├── template-detailed.md
+│   │       ├── template-full-tech.md
+│   │       └── interview-questions.md
+│   └── prd-analysis/
+│       ├── SKILL.md          # PRD analysis knowledge
 │       └── references/
-│           ├── template-high-level.md
-│           ├── template-detailed.md
-│           ├── template-full-tech.md
-│           └── interview-questions.md
+│           ├── analysis-criteria.md   # Depth-specific checklists
+│           ├── report-template.md     # Analysis report format
+│           └── common-issues.md       # Issue pattern library
 └── README.md                 # This file
 ```
 
