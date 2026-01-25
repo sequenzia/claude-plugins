@@ -14,6 +14,57 @@ Or symlink to your Claude plugins directory.
 
 ## Commands
 
+### `/dev-tools:analyze-codebase` - Codebase Analysis
+
+Generates a comprehensive analysis report of a codebase, including architecture, patterns, technology stack, and recommendations.
+
+#### Usage
+
+```bash
+/dev-tools:analyze-codebase           # Analyze current directory
+/dev-tools:analyze-codebase src/      # Analyze specific path
+```
+
+#### Workflow Phases
+
+1. **Codebase Exploration** - Launch 3 parallel explorer agents to examine:
+   - Project structure, entry points, and configuration
+   - Core modules, business logic, and key classes
+   - Dependencies, integrations, and external interfaces
+
+2. **Deep Analysis** - Analyze exploration findings to identify:
+   - Architecture style (monolith, microservices, layered, etc.)
+   - Key modules and their responsibilities
+   - Dependency relationships
+   - Technology stack
+   - Code patterns and conventions
+
+3. **Report Generation** - Generate polished markdown report saved to:
+   - `internal/reports/codebase-analysis-report.md`
+
+#### Agents Used
+
+| Agent | Model | Purpose |
+|-------|-------|---------|
+| code-explorer (x3) | Sonnet | Parallel exploration of structure, modules, dependencies |
+| codebase-analyzer | Opus | Deep analysis of architecture and patterns |
+| report-generator | Sonnet | Generates formatted markdown report |
+
+#### Report Contents
+
+- Executive Summary
+- Project Overview
+- Architecture (with ASCII diagrams)
+- Key Modules
+- Technology Stack
+- Code Organization
+- Entry Points & Data Flow
+- External Integrations
+- Testing Approach
+- Recommendations (strengths, improvements, next steps)
+
+---
+
 ### `/dev-tools:release` - Python Release Manager
 
 Automates the complete pre-release workflow for Python packages using `uv` and `ruff`.
@@ -249,6 +300,22 @@ Reviews code implementations for correctness, security, and maintainability with
 - **Model:** Opus
 - **Focus areas:** Correctness, security, error handling, maintainability
 - **Output:** Review report with issues (confidence >= 80) and suggestions
+
+### Codebase Analyzer Agent
+
+Analyzes codebase exploration results to identify architecture, patterns, and key insights.
+
+- **Model:** Opus
+- **Input:** Exploration findings from code-explorer agents
+- **Output:** Comprehensive analysis including architecture style, module mapping, dependency graph, technology stack, and recommendations
+
+### Report Generator Agent
+
+Generates comprehensive markdown reports from codebase analysis findings.
+
+- **Model:** Sonnet
+- **Input:** Analysis findings from codebase-analyzer agent
+- **Output:** Polished markdown report with diagrams, tables, and structured documentation
 
 ### Changelog Agent
 

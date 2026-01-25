@@ -130,11 +130,12 @@ Spec Driven Development plugin that transforms specifications into structured, a
 
 ### dev-tools
 **Location:** `plugins/dev-tools/`
-**Version:** 0.2.3
+**Version:** 0.2.4
 
-Developer tools for feature development, Git workflows, Python package management, and release automation.
+Developer tools for feature development, codebase analysis, Git workflows, Python package management, and release automation.
 
 **Commands:**
+- `/dev-tools:analyze-codebase [path]` - Generate comprehensive codebase analysis report
 - `/dev-tools:feature-dev <description>` - Feature development workflow (7 phases)
 - `/dev-tools:release [version]` - Python package release workflow
 - `/dev-tools:git-commit` - Stage and commit with conventional commit message
@@ -145,6 +146,8 @@ Developer tools for feature development, Git workflows, Python package managemen
 - `code-explorer` - Explores codebases to find relevant files and map architecture (Sonnet)
 - `code-architect` - Designs implementation blueprints with trade-off analysis (Opus)
 - `code-reviewer` - Reviews for correctness, security, maintainability with confidence scores (Opus)
+- `codebase-analyzer` - Analyzes exploration results to identify architecture and patterns (Opus)
+- `report-generator` - Generates comprehensive markdown reports (Sonnet)
 - `changelog-agent` - Analyzes git history and updates CHANGELOG.md
 
 **Skills:**
@@ -159,6 +162,12 @@ Developer tools for feature development, Git workflows, Python package managemen
 - `references/adr-template.md` - Architecture Decision Record template
 - `references/feature-changelog-template.md` - Feature changelog entry template
 - `references/entry-examples.md` - Changelog entry examples
+
+**Codebase Analysis Workflow (3 phases):**
+1. Codebase Exploration - Launch 3 parallel code-explorer agents (structure, modules, dependencies)
+2. Deep Analysis - Identify architecture, patterns, and technology stack (codebase-analyzer)
+3. Report Generation - Create polished markdown report (report-generator)
+4. Output saved to `internal/reports/codebase-analysis-report.md`
 
 **Feature Development Workflow (7 phases):**
 1. Discovery - Understand requirements
@@ -400,6 +409,7 @@ The plugins are designed for a natural development workflow:
 | See task status | `/task-manager:status` |
 | Get next task | `/task-manager:next` |
 | Complete a task | `/task-manager:complete <id>` |
+| Analyze a codebase | `/dev-tools:analyze-codebase [path]` |
 | Develop a feature | `/dev-tools:feature-dev <description>` |
 | Commit changes | `/dev-tools:git-commit` |
 | Push to remote | `/dev-tools:git-push` |

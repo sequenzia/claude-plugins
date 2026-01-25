@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `/dev-tools:analyze-codebase` command for comprehensive codebase analysis
+- Add `codebase-analyzer` agent (Opus) for deep architecture and pattern analysis
+- Add `report-generator` agent (Sonnet) for generating polished markdown reports
+- Add 3-phase workflow: exploration, analysis, report generation
+
 ## [0.2.2] - 2026-01-22
 
 ### Fixed
