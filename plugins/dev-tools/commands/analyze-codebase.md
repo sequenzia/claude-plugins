@@ -11,6 +11,7 @@ allowed-tools:
   - TaskCreate
   - TaskUpdate
   - TaskList
+  - AskUserQuestion
 arguments:
   - name: path
     description: Optional path to analyze (defaults to current directory)
@@ -21,7 +22,7 @@ arguments:
 
 You are executing a 3-phase codebase analysis workflow. This workflow explores a codebase, analyzes its architecture, and generates a comprehensive report.
 
-**CRITICAL: You MUST complete ALL 3 phases.** The workflow is not complete until Phase 3: Report Generation is finished. After completing each phase, immediately proceed to the next phase without waiting for user prompts.
+**CRITICAL: You MUST complete ALL 3 phases.** The workflow is not complete until Phase 3: Output & Context Loading is finished. After completing each phase, immediately proceed to the next phase without waiting for user prompts.
 
 ## Phase Overview
 
@@ -29,7 +30,7 @@ Execute these phases in order, completing ALL of them:
 
 1. **Codebase Exploration** - Explore structure, patterns, and dependencies
 2. **Deep Analysis** - Analyze findings to identify architecture and patterns
-3. **Report Generation** - Generate comprehensive markdown report
+3. **Output & Context Loading** - Present options and deliver results in user's preferred format
 
 ---
 
@@ -167,52 +168,139 @@ Execute these phases in order, completing ALL of them:
 
 ---
 
-## Phase 3: Report Generation
+## Phase 3: Output & Context Loading
 
-**Goal:** Generate a comprehensive, well-formatted markdown report.
+**Goal:** Present output options and deliver analysis results in the user's preferred format.
 
 1. Mark Phase 3 as `in_progress`
 
-2. **Ensure output directory exists:**
-   - Check if `internal/reports/` directory exists
-   - If not, create it using Bash: `mkdir -p internal/reports`
-
-3. **Launch report-generator agent** using the Task tool with `subagent_type: "dev-tools:report-generator"`:
+2. **Ask user for output preferences** using `AskUserQuestion` with multi-select:
 
    ```
-   Generate a comprehensive codebase analysis report in markdown format.
-
-   Path analyzed: [path]
-   Analysis date: [current date]
-
-   ## Analysis Findings
-
-   [Include the complete analysis from Phase 2]
-
-   ---
-
-   Generate a well-structured markdown report and save it to:
-   internal/reports/codebase-analysis-report.md
-
-   The report should be polished, readable, and useful for developers
-   new to the codebase as well as those looking to understand the
-   overall architecture.
+   Question: "How would you like to use the analysis results?"
+   Header: "Output"
+   Options:
+     - Label: "Save detailed report"
+       Description: "Generate a comprehensive markdown report to internal/reports/"
+     - Label: "Load into session context"
+       Description: "Inject analysis into this session so I can reference it when answering questions"
+   MultiSelect: true
    ```
 
-4. **Wait for report generation to complete.**
+3. **Handle the user's selection:**
 
-5. **Verify the report was created:**
-   - Read the generated report file to confirm it exists
-   - Display a summary to the user
+   ### If NEITHER option is selected:
+   - Display a brief summary (~200-300 words) directly in the chat covering:
+     - Architecture style
+     - Key modules (3-5 with one-line descriptions)
+     - Technology stack highlights
+     - Notable patterns or insights
+   - Confirm: "Analysis complete. Key findings displayed above. You can re-run with output options if you need a detailed report or persistent context."
+   - Skip to step 8
 
-6. Mark Phase 3 as `completed`
+   ### If "Save detailed report" is selected:
+   - Ensure output directory exists: `mkdir -p internal/reports`
+   - **Launch report-generator agent** using Task tool with `subagent_type: "dev-tools:report-generator"`:
+     ```
+     Generate a comprehensive codebase analysis report in markdown format.
 
-7. **Final message:**
-   - Confirm the report location: `internal/reports/codebase-analysis-report.md`
+     Path analyzed: [path]
+     Analysis date: [current date]
+
+     ## Analysis Findings
+
+     [Include the complete analysis from Phase 2]
+
+     ---
+
+     Generate a well-structured markdown report and save it to:
+     internal/reports/codebase-analysis-report.md
+
+     The report should be polished, readable, and useful for developers
+     new to the codebase as well as those looking to understand the
+     overall architecture.
+     ```
+   - Wait for report generation to complete
+   - Verify the report was created by reading the file
+   - Confirm: "Report saved to `internal/reports/codebase-analysis-report.md`"
+
+   ### If "Load into session context" is selected:
+   - **Ask follow-up question** using `AskUserQuestion`:
+     ```
+     Question: "What level of detail for the session context?"
+     Header: "Detail Level"
+     Options:
+       - Label: "Condensed summary"
+         Description: "~500-1000 words with architecture, organization, stack, and key insights"
+       - Label: "Full analysis"
+         Description: "Complete findings from the deep analysis phase"
+     MultiSelect: false
+     ```
+
+   - **If "Condensed summary" selected**, format the analysis as:
+     ```markdown
+     ---
+     **Codebase Analysis Context Loaded**
+
+     The following analysis has been loaded into this session. I will use this context when answering questions about this codebase.
+
+     ## Codebase Context: [Project Name]
+
+     ### Architecture
+     - Style: [e.g., Modular monolith with event-driven components]
+     - Key modules: [list 3-5 main modules with one-line descriptions]
+     - Primary patterns: [e.g., Repository pattern, Factory, Observer]
+
+     ### Code Organization
+     - Entry points: [main files/functions]
+     - Directory structure: [brief overview]
+     - Naming conventions: [key conventions]
+
+     ### Technology Stack
+     - Languages: [with versions if known]
+     - Frameworks: [key frameworks]
+     - Key dependencies: [critical deps]
+
+     ### Development Info
+     - Testing: [approach, frameworks, coverage notes]
+     - Build: [build system, commands]
+     - External integrations: [APIs, databases, services]
+
+     ### Key Insights
+     - [2-3 bullet points on important patterns/conventions to follow]
+
+     ---
+     ```
+
+   - **If "Full analysis" selected**, format the analysis as:
+     ```markdown
+     ---
+     **Codebase Analysis Context Loaded**
+
+     The following analysis has been loaded into this session. I will use this context when answering questions about this codebase.
+
+     [Include complete Phase 2 analysis findings, formatted as readable markdown]
+
+     ---
+     ```
+
+   - **Display the formatted context** directly in the response
+   - Confirm with brief summary: "Analysis loaded into session context. Sections: Architecture, Code Organization, Technology Stack, Development Info, Key Insights."
+
+   ### If BOTH options are selected:
+   - First: Generate and save the detailed report (as described above)
+   - Then: Ask for context detail level and inject context (as described above)
+   - Confirm both actions completed
+
+4. Mark Phase 3 as `completed`
+
+5. **Final message based on selection:**
+   - If report saved: "Report available at `internal/reports/codebase-analysis-report.md`"
+   - If context loaded: "I now have detailed knowledge of this codebase and can answer architectural questions, suggest implementations following existing patterns, and help navigate the code."
    - Offer next steps:
-     - Open the report for review
+     - Ask questions about the codebase architecture
      - Run analysis on a different path
-     - Share any specific questions about the codebase
+     - Request specific deep-dives into modules or patterns
 
 ---
 

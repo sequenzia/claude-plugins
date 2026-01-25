@@ -130,7 +130,7 @@ Spec Driven Development plugin that transforms specifications into structured, a
 
 ### dev-tools
 **Location:** `plugins/dev-tools/`
-**Version:** 0.2.4
+**Version:** 0.2.6
 
 Developer tools for feature development, codebase analysis, Git workflows, Python package management, and release automation.
 
@@ -166,8 +166,11 @@ Developer tools for feature development, codebase analysis, Git workflows, Pytho
 **Codebase Analysis Workflow (3 phases):**
 1. Codebase Exploration - Launch 3 parallel code-explorer agents (structure, modules, dependencies)
 2. Deep Analysis - Identify architecture, patterns, and technology stack (codebase-analyzer)
-3. Report Generation - Create polished markdown report (report-generator)
-4. Output saved to `internal/reports/codebase-analysis-report.md`
+3. Output & Context Loading - User chooses output format:
+   - Save detailed report to `internal/reports/codebase-analysis-report.md`
+   - Load analysis into session context (condensed or full)
+   - Both options together
+   - Neither (displays brief summary)
 
 **Feature Development Workflow (7 phases):**
 1. Discovery - Understand requirements
