@@ -7,18 +7,6 @@
   },
   "plugins": [
     {
-      "name": "task-manager",
-      "description": "Spec Driven Development document management - conducts dynamic interviews to generate PRDs, Tech Specs, and Design Specs optimized for AI coding agents",
-      "version": "0.1.0",
-      "author": {
-        "name": "Stephen Sequenzia",
-        "email": "sequenzia@gmail.com"
-      },
-      "source": "./plugins/task-manager",
-      "category": "development",
-      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/task-manager"
-    },
-    {
       "name": "prd-tools",
       "description": "Generate and analyze Product Requirements Documents through interactive workflows",
       "version": "0.3.1",
@@ -41,30 +29,6 @@
       "source": "./plugins/dev-tools",
       "category": "development",
       "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/dev-tools"
-    },
-    {
-      "name": "mission-control",
-      "description": "Creates and manages coding tasks for AI agents - analyze specs, track tasks, manage dependencies based on PRDs",
-      "version": "0.1.2",
-      "author": {
-        "name": "Stephen Sequenzia",
-        "email": "sequenzia@gmail.com"
-      },
-      "source": "./plugins/mission-control",
-      "category": "development",
-      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/mission-control"
-    },
-    {
-      "name": "ralph-mission",
-      "description": "Mission-driven autonomous loop - iterates through mission-control tasks until all are complete",
-      "version": "0.1.0",
-      "author": {
-        "name": "Stephen Sequenzia",
-        "email": "sequenzia@gmail.com"
-      },
-      "source": "./plugins/ralph-mission",
-      "category": "automation",
-      "homepage": "https://github.com/sequenzia/claude-plugins/tree/main/plugins/ralph-mission"
     }
   ]
 }

@@ -1,9 +1,0 @@
-{
-  "name": "ralph-mission",
-  "version": "0.1.0",
-  "description": "Mission-driven autonomous loop - iterate through mission-control tasks until all are complete",
-  "author": {
-    "name": "Stephen Sequenzia",
-    "email": "sequenzia@gmail.com"
-  }
-}

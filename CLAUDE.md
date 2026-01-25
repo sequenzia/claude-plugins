@@ -18,10 +18,7 @@ claude-plugins/
 │   └── marketplace.json              # Central plugin registry
 ├── plugins/
 │   ├── prd-tools/                    # PRD generation and analysis
-│   ├── task-manager/                 # Spec-driven task decomposition
-│   ├── dev-tools/                    # Feature development, Git workflows, and releases
-│   ├── mission-control/              # Simplified task management
-│   └── ralph-mission/                # Mission-driven autonomous loops
+│   └── dev-tools/                    # Feature development, Git workflows, and releases
 ├── CLAUDE.md                         # This file
 ├── README.md                         # User documentation
 └── LICENSE                           # MIT License
@@ -90,44 +87,6 @@ Generates and analyzes Product Requirements Documents through interactive workfl
 
 ---
 
-### task-manager
-**Location:** `plugins/task-manager/`
-**Version:** 0.1.0
-
-Spec Driven Development plugin that transforms specifications into structured, actionable task lists optimized for AI coding agents.
-
-**Commands:**
-- `/task-manager:analyze` - Analyze spec and generate task list
-- `/task-manager:status` - Show task summary and metrics
-- `/task-manager:next` - Suggest next tasks to work on
-- `/task-manager:complete` - Mark task complete
-- `/task-manager:block` - Mark task as blocked
-- `/task-manager:show` - Show task details
-- `/task-manager:update` - Re-analyze spec and update tasks
-- `/task-manager:export` - Export task list (json, markdown, csv)
-- `/task-manager:context-groups` - Generate context-aware task groups
-- `/task-manager:next-group` - Get next context group
-- `/task-manager:show-group` - Show context group details
-
-**Agents:**
-- `spec-analyzer` - Proactively detects and analyzes spec documents
-
-**Skills:**
-- `spec-task-management` - Task decomposition methodology and dependency patterns
-
-**Key Files:**
-- `references/task-schema.json` - JSON schema for task lists
-- `references/dependency-patterns.md` - Dependency identification patterns
-- `references/context-defaults.json` - Context grouping configuration
-
-**Task Properties:**
-- Priority: critical, high, medium, low
-- Complexity: XS, S, M, L, XL (T-shirt sizing)
-- Dependencies: hard, soft, resource types
-- Status: not_started, in_progress, blocked, complete, obsolete
-
----
-
 ### dev-tools
 **Location:** `plugins/dev-tools/`
 **Version:** 0.2.6
@@ -191,66 +150,6 @@ Developer tools for feature development, codebase analysis, Git workflows, Pytho
 7. Update CHANGELOG.md with version section
 8. Commit changelog and push
 9. Create and push version tag
-
----
-
-### mission-control
-**Location:** `plugins/mission-control/`
-**Version:** 0.1.2
-
-Simplified task management with mission-based organization.
-
-**Commands:**
-- `/mission-control:generate` - Create task list from specification
-- `/mission-control:status` - Show task summary and metrics
-- `/mission-control:next` - Recommend next tasks
-- `/mission-control:complete` - Mark task complete
-- `/mission-control:show` - Show task details
-
-**Agents:**
-- `spec-analyzer` - Analyzes specs and generates mission-based task lists
-
-**Skills:**
-- `simple-task-management` - Mission-centric task decomposition
-
-**Storage:** Tasks stored in `missions/<mission-slug>/<project-name>.tasks.json`
-
----
-
-### ralph-mission
-**Location:** `plugins/ralph-mission/`
-**Version:** 0.1.0
-
-Mission-driven autonomous loop that iterates through mission-control tasks until all are complete.
-
-**Commands:**
-- `/ralph-mission <mission-path>` - Start autonomous task loop
-- `/ralph-mission:status` - Show loop progress
-- `/ralph-mission:cancel` - Cancel active loop
-
-**Hooks:**
-- `Stop` - Core loop engine that detects task completion and selects next task
-
-**Task Selection (Priority Scoring):**
-```
-score = (priority × 100) + (blocks × 50) + complexity_bonus
-```
-- Priority: critical=4, high=3, medium=2, low=1
-- Complexity bonus: XS=+15, S=+10, M=+5, L=0, XL=-5
-
-**Completion Detection:**
-- Reads task status from tasks.json file
-- Claude updates status to "complete" when task is done
-- Hook detects the change and selects next task
-
-**Progress Tracking:**
-- Learnings logged to `progress.txt` in mission directory
-- Git commits required per task for rollback points
-
-**Safety Features:**
-- Max iterations limit (default: 50)
-- Max failed attempts per task (default: 3)
-- Dependency-aware task selection
 
 ---
 
@@ -384,13 +283,9 @@ The plugins are designed for a natural development workflow:
    ↓
 2. PRD Analysis (prd-tools:analyze) [optional]
    ↓
-3. Task Generation (choose one):
-   a. Native Tasks: prd-tools:create-tasks (Claude Code TaskCreate/TaskUpdate)
-   b. Mission Tasks: task-manager or mission-control (JSON file)
+3. Task Generation (prd-tools:create-tasks)
    ↓
-4. Task Execution (choose one):
-   a. Manual: dev-tools:feature-dev for each task
-   b. Autonomous: ralph-mission for mission-control tasks
+4. Task Execution (dev-tools:feature-dev for each task)
    ↓
 5. Git Operations (dev-tools: commit, push)
    ↓
@@ -399,8 +294,6 @@ The plugins are designed for a natural development workflow:
 
 **Native Tasks Mode:** Use `prd-tools:create-tasks` to generate Claude Code native Tasks with dependencies. View with `TaskList`, track with `TaskGet`/`TaskUpdate`.
 
-**Autonomous Mode:** Use `ralph-mission` to automatically iterate through all tasks from a mission-control tasks.json file until complete.
-
 ## Quick Reference
 
 | Task | Command |
@@ -408,16 +301,9 @@ The plugins are designed for a natural development workflow:
 | Create a PRD | `/prd-tools:create` |
 | Analyze a PRD | `/prd-tools:analyze <path>` |
 | Generate native Tasks from PRD | `/prd-tools:create-tasks <path>` |
-| Analyze spec into tasks | `/task-manager:analyze <spec>` |
-| See task status | `/task-manager:status` |
-| Get next task | `/task-manager:next` |
-| Complete a task | `/task-manager:complete <id>` |
 | Analyze a codebase | `/dev-tools:analyze-codebase [path]` |
 | Develop a feature | `/dev-tools:feature-dev <description>` |
 | Commit changes | `/dev-tools:git-commit` |
 | Push to remote | `/dev-tools:git-push` |
 | Release package | `/dev-tools:release` |
 | Bump plugin version | `/dev-tools:bump-plugin-version` |
-| Start autonomous loop | `/ralph-mission <mission-path>` |
-| Check loop progress | `/ralph-mission:status` |
-| Cancel loop | `/ralph-mission:cancel` |

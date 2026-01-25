@@ -36,7 +36,7 @@ Use AskUserQuestion to prompt the user to select a plugin.
 
 Display each plugin as an option with its current version:
 - Format: "{plugin_name} (v{current_version})"
-- Example: "task-manager (v0.1.0)"
+- Example: "prd-tools (v0.3.1)"
 
 ---
 
