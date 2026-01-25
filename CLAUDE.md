@@ -31,7 +31,7 @@ claude-plugins/
 
 ### prd-tools
 **Location:** `plugins/prd-tools/`
-**Version:** 0.3.0
+**Version:** 0.3.1
 
 Generates and analyzes Product Requirements Documents through interactive workflows, and transforms PRDs into Claude Code native Tasks.
 
@@ -41,7 +41,7 @@ Generates and analyzes Product Requirements Documents through interactive workfl
 - `/prd-tools:create-tasks <path>` - Generate Claude Code native Tasks from an existing PRD
 
 **Agents:**
-- `interview-agent` - Conducts adaptive requirement gathering interviews (uses opus model)
+- `interview-agent` - Conducts adaptive interviews with proactive recommendations (uses opus model)
 - `research-agent` - Researches technical docs, best practices, and domain knowledge
 - `prd-analyzer` - Analyzes PRDs for quality issues with interactive resolution (uses opus model)
 - `task-generator` - Transforms PRDs into native Tasks with dependencies (uses opus model)
@@ -54,11 +54,20 @@ Generates and analyzes Product Requirements Documents through interactive workfl
 **Key Files:**
 - `skills/prd-generation/references/template-*.md` - PRD templates (high-level, detailed, full-tech)
 - `skills/prd-generation/references/interview-questions.md` - Question inspiration library
+- `skills/prd-generation/references/recommendation-triggers.md` - Proactive recommendation trigger patterns
+- `skills/prd-generation/references/recommendation-format.md` - Recommendation presentation templates
 - `skills/prd-analysis/references/analysis-criteria.md` - Depth-specific analysis checklists
 - `skills/prd-analysis/references/common-issues.md` - Issue pattern library
 - `skills/prd-analysis/references/report-template.md` - Analysis report format
 - `skills/task-generation/references/decomposition-patterns.md` - Feature decomposition patterns
 - `skills/task-generation/references/dependency-inference.md` - Dependency inference rules
+
+**Interview Features:**
+- Proactive recommendations based on detected trigger patterns (auth, scale, security, etc.)
+- Inline insights during rounds with Accept/Tell me more/Skip options
+- Dedicated recommendations round before summary (for detailed/full-tech depth)
+- Proactive research for compliance topics (GDPR, HIPAA, PCI, WCAG)
+- Agent Recommendations section clearly distinguished from user requirements
 
 **Analysis Features:**
 - Depth-aware analysis (respects high-level/detailed/full-tech)
@@ -121,7 +130,7 @@ Spec Driven Development plugin that transforms specifications into structured, a
 
 ### dev-tools
 **Location:** `plugins/dev-tools/`
-**Version:** 0.2.0
+**Version:** 0.2.3
 
 Developer tools for feature development, Git workflows, Python package management, and release automation.
 

@@ -80,6 +80,51 @@ Cover all four categories, but adjust depth based on level:
 - **Probe deeper on important areas**: If user indicates something is critical, ask follow-up questions
 - **Explore codebase when helpful**: For "new feature" type, offer to explore relevant code (with user approval)
 
+### Proactive Recommendations
+
+Throughout the interview, watch for patterns in user responses that indicate opportunities for best-practice recommendations. When detected, offer relevant suggestions based on industry standards.
+
+**Trigger Detection**: Monitor for keywords that indicate recommendation opportunities:
+
+| Domain | Trigger Keywords | Recommendation Areas |
+|--------|-----------------|---------------------|
+| Authentication | "login", "auth", "user accounts", "session" | OAuth patterns, MFA, session management |
+| Scale | "millions", "high traffic", "concurrent users" | Caching, CDN, database scaling |
+| Security | "sensitive", "PII", "HIPAA", "GDPR" | Encryption, compliance patterns |
+| Real-time | "real-time", "live", "notifications" | WebSocket vs SSE, push notifications |
+| Payments | "payment", "billing", "subscription" | PCI compliance, payment providers |
+
+**For comprehensive trigger patterns, refer to:** `skills/prd-generation/references/recommendation-triggers.md`
+
+**When to Offer Recommendations:**
+- Inline insights: Brief suggestions during rounds when triggers detected (max 2 per round)
+- Recommendations round: Dedicated round before summary for accumulated recommendations
+- Always present recommendations for user approval—never assume acceptance
+
+**Recommendation Format:**
+```yaml
+AskUserQuestion:
+  questions:
+    - header: "Quick Insight"
+      question: "{Brief recommendation}. Would you like to include this in the PRD?"
+      options:
+        - label: "Include this"
+          description: "Add to PRD requirements"
+        - label: "Tell me more"
+          description: "Get more details"
+        - label: "Skip"
+          description: "Continue without this"
+      multiSelect: false
+```
+
+**For detailed templates, refer to:** `skills/prd-generation/references/recommendation-format.md`
+
+**Tracking Recommendations:**
+Maintain internal tracking of detected triggers and accepted recommendations:
+- Detected triggers with source round
+- Accepted recommendations with target PRD section
+- Skipped/modified recommendations
+
 ## Interview Process
 
 ### Round Structure
@@ -88,7 +133,14 @@ Each round MUST:
 1. Summarize what you've learned so far (briefly) - use text output
 2. Ask 3-5 focused questions using `AskUserQuestion` - REQUIRED, never use text for questions
 3. Use a mix of multiple choice (for structured data) and open text (for details)
-4. Acknowledge responses before moving to next round
+4. **Detect triggers**: Note any recommendation triggers in user responses
+5. **Offer inline insights** (optional): If triggers detected, offer 1-2 brief recommendations
+6. Acknowledge responses before moving to next round
+
+**Trigger Detection per Round:**
+- After receiving user responses, scan for trigger keywords
+- Note triggers internally for the recommendations round
+- For high-priority triggers (compliance, security), consider inline insight immediately
 
 ### Question Guidelines
 
@@ -175,6 +227,65 @@ If the product type is "New feature for existing product":
 3. Share relevant findings with the user
 4. Use findings to inform follow-up questions
 
+## Recommendations Round
+
+After completing the main interview rounds and before the summary, present a dedicated recommendations round. This round aggregates best-practice suggestions based on triggers detected throughout the interview.
+
+### When to Include
+
+- **Skip for high-level depth**: High-level PRDs focus on problem/goals; recommendations may be premature
+- **Include for detailed/full-tech**: These depths benefit from architectural and technical recommendations
+- **Skip if no triggers detected**: If no recommendation triggers were found, proceed directly to summary
+
+### Recommendation Categories
+
+Present recommendations organized by category:
+
+1. **Architecture**: Patterns, scaling approaches, data models
+2. **Security**: Authentication, encryption, compliance
+3. **User Experience**: Accessibility, performance, error handling
+4. **Operational**: Monitoring, deployment, testing strategies
+
+### Presentation Format
+
+Introduce the recommendations round briefly:
+
+```
+Based on what you've shared, I have a few recommendations based on industry best practices.
+I'll present each for your review—you can accept, modify, or skip any of them.
+```
+
+Then present each recommendation using `AskUserQuestion`:
+
+```yaml
+AskUserQuestion:
+  questions:
+    - header: "Recommendation 1 of {N}: {Category}"
+      question: "{Recommendation}\n\n**Why this matters:**\n{Brief rationale}"
+      options:
+        - label: "Accept"
+          description: "Include in PRD"
+        - label: "Modify"
+          description: "Adjust this recommendation"
+        - label: "Skip"
+          description: "Don't include"
+      multiSelect: false
+```
+
+### Handling Modifications
+
+If user selects "Modify":
+1. Ask what they'd like to change using `AskUserQuestion`
+2. Present the modified recommendation for confirmation
+3. Add the modified version to accepted recommendations
+
+### Tracking
+
+After the recommendations round, update internal tracking:
+- Mark each recommendation as accepted, modified, or skipped
+- Note the target PRD section for accepted recommendations
+- Modified recommendations include the user's adjustments
+
 ## Pre-Compilation Summary
 
 Before compilation, present a comprehensive summary:
@@ -203,9 +314,20 @@ Before compilation, present a comprehensive summary:
 - Risks: {list risks}
 - Out of Scope: {list exclusions}
 
+### Agent Recommendations (Accepted)
+*The following recommendations were suggested based on industry best practices and accepted during the interview:*
+
+1. **{Category}**: {Recommendation title}
+   - Rationale: {Why this was recommended}
+   - Applies to: {Which section/feature}
+
+{Continue for all accepted recommendations, or note "No recommendations accepted" if none}
+
 ### Open Questions
 {Any unresolved items}
 ```
+
+**Important**: Clearly distinguish the "Agent Recommendations" section from user-provided requirements. This transparency helps stakeholders understand which requirements came from the user versus agent suggestions.
 
 Then use `AskUserQuestion` to confirm:
 
@@ -225,11 +347,13 @@ If user selects "Needs corrections", ask what they'd like to change using AskUse
 
 Only proceed to compilation after user explicitly confirms via AskUserQuestion.
 
-## External Research (On-Demand)
+## External Research (On-Demand and Proactive)
 
-When the user explicitly requests research about technologies OR general topics during the interview, you can invoke the research agent to gather current information.
+Research can be invoked in two ways: on-demand when the user requests it, or proactively for specific high-value topics.
 
-### Recognizing Research Requests
+### On-Demand Research
+
+When the user explicitly requests research about technologies OR general topics during the interview, invoke the research agent.
 
 **Technical research triggers:**
 - "Research the {API/library} documentation"
@@ -244,6 +368,22 @@ When the user explicitly requests research about technologies OR general topics 
 - "Research {compliance} requirements" (GDPR, HIPAA, WCAG, etc.)
 - "Help me understand the problem space for {domain}"
 - "What do users expect from {feature type}?"
+
+### Proactive Research
+
+**You MAY proactively research** (without explicit user request) for specific high-value topics:
+
+**Auto-research triggers:**
+- **Compliance mentions**: GDPR, HIPAA, PCI DSS, SOC 2, WCAG, ADA compliance
+- **User uncertainty**: "I'm not sure", "what do you recommend?", "what's standard?"
+- **Complex trade-offs**: When multiple valid approaches exist and current information would help
+
+**Proactive research limit**: Maximum 2 proactive research calls per interview to avoid slowing down the process.
+
+**Before proactive research**, briefly inform the user:
+```
+Since you mentioned GDPR compliance, let me quickly research the current requirements to ensure we capture them accurately.
+```
 
 ### Invoking Research
 
@@ -273,11 +413,19 @@ After receiving research results:
    - Compliance → Non-Functional Requirements
    - Competitive → Problem Statement / Solution Overview
 
-2. **Use findings to ask informed follow-ups**: Research may reveal new areas to explore
+2. **Use findings for recommendations**: Research-backed recommendations are more valuable; include source attribution
 
-3. **Credit sources**: Include research sources in PRD references section
+3. **Use findings to ask informed follow-ups**: Research may reveal new areas to explore
 
-**Important**: Only invoke research when the user explicitly asks. Do not proactively research without user request.
+4. **Credit sources**: Include research sources in PRD references section
+
+### Tracking Research Usage
+
+Track proactive research usage during the interview:
+```
+Proactive Research: 1/2 used
+- [Round 2] GDPR requirements - informed compliance recommendation
+```
 
 ## Compilation Handoff
 
@@ -311,4 +459,6 @@ When the user confirms the summary, you should:
 
 ## Reference Files
 
-For question inspiration, refer to: `skills/prd-generation/references/interview-questions.md`
+- **Question inspiration**: `skills/prd-generation/references/interview-questions.md`
+- **Recommendation triggers**: `skills/prd-generation/references/recommendation-triggers.md`
+- **Recommendation formats**: `skills/prd-generation/references/recommendation-format.md`

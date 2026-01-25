@@ -213,8 +213,31 @@ This document contains questions organized by category and depth level for gathe
 
 ### When User is Unsure
 - Offer common options/patterns as examples
-- Suggest industry best practices
-- Mark as open question to resolve later
+- Suggest industry best practices via the recommendation system
+- Consider proactive research for compliance or complex topics
+- Mark as open question to resolve later if user defers decision
+
+**Connecting to Recommendations:**
+
+When a user expresses uncertainty, this is an opportunity to offer proactive recommendations:
+
+1. **Trigger phrases**: "I'm not sure", "what do you recommend?", "what's standard?", "what do others do?"
+2. **Response approach**:
+   - Offer a brief best-practice recommendation as an inline insight
+   - If the topic is complex (compliance, architecture), consider proactive research
+   - Present options using `AskUserQuestion` with clear trade-offs
+3. **Example flow**:
+   ```
+   User: "I'm not sure what authentication approach to use"
+
+   Agent: [Detects auth trigger + uncertainty]
+   Agent: [Offers inline insight via AskUserQuestion]
+   "For public-facing apps, OAuth 2.0 with PKCE is the recommended approach.
+    Would you like to include this in the PRD?"
+   Options: Include this | Tell me more | Skip
+   ```
+
+**See also:** `recommendation-triggers.md` for trigger patterns and `recommendation-format.md` for presentation templates.
 
 ### When Building Feature for Existing Product
 - Ask about existing patterns to follow
